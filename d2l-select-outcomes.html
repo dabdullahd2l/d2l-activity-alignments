@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="./siren-entity-behavior.html">
 <link rel="import" href="./d2l-outcome.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
 <!--
 `d2l-select-outcomes`
 
@@ -9,15 +10,49 @@
 -->
 
 <dom-module id="d2l-select-outcomes">
-	<template>
+	<template strip-whitespace>
 		<style>
 			:host {
 				display: block;
 			}
+
+			ul {
+				padding: 0;
+			}
+
+			li {
+				list-style-type: none;
+				margin-top: -1px;
+				border: 1px solid transparent;
+				border-top-color: var(--d2l-color-gypsum);
+				color: var(--d2l-color-ferrite);
+			}
+
+			li.d2l-select-outcomes-first {
+				border-top-color: transparent;
+			}
+
+			li:focus,
+			li:hover {
+				z-index: 2;
+				background-color: var(--d2l-color-celestine-plus-2);
+				border-top: 1px solid var(--d2l-color-celestine-plus-1);
+				border-bottom: 1px solid var(--d2l-color-celestine-plus-1);
+				color: var(--d2l-color-celestine);
+			}
+
+			li.d2l-select-outcomes-last:focus,
+			li.d2l-select-outcomes-last:hover {
+				border-bottom-color: var(--d2l-color-celestine-plus-1);
+			}
 		</style>
-		<template is="dom-repeat" items="[[_getObjectives(entity)]]">
-			<d2l-outcome entity="[[item]]"></d2l-outcome>
-		</template>
+		<ul>
+			<template is="dom-repeat" items="[[objectives]]">
+				<li class$="[[_getClass(index, objectives)]]">
+					<d2l-outcome entity="[[item]]"></d2l-outcome>
+				</li>
+			</template>
+		</ul>
 	</template>
 
 	<script>
@@ -31,12 +66,25 @@
 
 			properties: {
 				alignmentsHref: String,
-				alignmentsEntity: Object
+				alignmentsEntity: Object,
+				objectives: {
+					type: Object,
+					computed: '_getObjectives(entity)'
+				}
 			},
 
 			observers: [
 				'_fetch("alignmentsEntity", alignmentsHref, token)'
 			],
+
+			_getClass: function(index, objectives) {
+				if (index === 0) {
+					return 'd2l-select-outcomes-first';
+				} else if (index === objectives.length - 1) {
+					return 'd2l-select-outcomes-last';
+				}
+				return '';
+			},
 
 			_getObjectives: function(entity) {
 				return entity && entity.getSubEntitiesByRel('https://api.brightspace.com/rels/__objective');
