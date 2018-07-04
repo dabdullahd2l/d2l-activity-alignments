@@ -1,0 +1,37 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-checkbox/d2l-checkbox.html">
+<!--
+`d2l-select-outcomes`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="d2l-outcome">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<d2l-checkbox checked="{{selected}}">
+			[[entity.properties.description]]
+		</d2l-checkbox>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'd2l-outcome',
+
+			properties: {
+				entity: Object,
+				selected: {
+					type: Boolean,
+					notify: true
+				}
+			}
+
+		});
+	</script>
+</dom-module>

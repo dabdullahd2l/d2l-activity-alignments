@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./siren-entity-behavior.html">
+<link rel="import" href="./d2l-outcome.html">
+<!--
+`d2l-select-outcomes`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="d2l-select-outcomes">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<template is="dom-repeat" items="[[_getObjectives(entity)]]">
+			<d2l-outcome entity="[[item]]"></d2l-outcome>
+		</template>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'd2l-select-outcomes',
+
+			behaviors: [
+				window.D2L.PolymerBehaviors.SirenEntityBehavior
+			],
+
+			properties: {
+				alignmentsHref: String,
+				alignmentsEntity: Object
+			},
+
+			observers: [
+				'_fetch("alignmentsEntity", alignmentsHref, token)'
+			],
+
+			_getObjectives: function(entity) {
+				return entity && entity.getSubEntitiesByRel('https://api.brightspace.com/rels/__objective');
+			}
+
+		});
+	</script>
+</dom-module>

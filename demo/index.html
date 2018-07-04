@@ -4,25 +4,52 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>select-outcomes demo</title>
+    <title>d2l-select-outcomes demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../select-outcomes.html">
+    <link rel="import" href="../d2l-select-outcomes.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
     </style>
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic select-outcomes demo</h3>
+      <h3>Basic d2l-select-outcomes demo</h3>
       <demo-snippet>
         <template>
-          <select-outcomes></select-outcomes>
+          <d2l-select-outcomes></d2l-select-outcomes>
         </template>
       </demo-snippet>
     </div>
+	<script>
+		window.addEventListener('WebComponentsReady', function() {
+			document.querySelector('d2l-select-outcomes').entity = window.D2L.Hypermedia.Siren.Parse({
+				entities: [{
+					rel: ['https://api.brightspace.com/rels/__objective'],
+					properties: {
+						description: 'Description',
+						jurisdiction: 'Jurisdiction',
+						notation: 'Notation'
+					},
+					links: [{
+						rel: ['self'],
+						href: 'http://objectives.api.brightspace.com/objective-1'
+					}]
+				}]
+			});
+			document.querySelector('d2l-select-outcomes').alignmentsEntity = window.D2L.Hypermedia.Siren.Parse({
+				entities: [{
+					rel: ['https://api.brightspace.com/rels/__alignment'],
+					links: [{
+						rel: ['https://api.brightspace.com/rels/__objective'],
+						href: 'http://objectives.api.brightspace.com/objective-1'
+					}]
+				}]
+			});
+		});
+	</script>
   </body>
 </html>

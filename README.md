@@ -1,4 +1,4 @@
-# \<select-outcomes\>
+# \<d2l-select-outcomes\>
 
 
 
