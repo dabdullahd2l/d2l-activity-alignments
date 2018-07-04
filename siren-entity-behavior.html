@@ -2,7 +2,7 @@
 <script>
 	window.D2L = window.D2L || {};
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-	/* @polymerBehavior window.D2L.PolymerBehaviors.SirenEntityBehavior */
+	/* @polymerBehavior window.D2L.PolymerBehaviors.SirenEntityBehaviorImpl */
 	window.D2L.PolymerBehaviors.SirenEntityBehaviorImpl = {
 		properties: {
 			href: String,
@@ -26,9 +26,7 @@
 		}
 	};
 
-	/*
-	* @polymerBehavior window.D2L.PolymerBehaviors.SirenEntityBehavior
-	*/
+	/* @polymerBehavior */
 	window.D2L.PolymerBehaviors.SirenEntityBehavior = [
 		D2L.PolymerBehaviors.FetchSirenEntityBehavior,
 		window.D2L.PolymerBehaviors.SirenEntityBehaviorImpl
