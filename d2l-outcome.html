@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-checkbox/d2l-checkbox.html">
+<link rel="import" href="./siren-entity-behavior.html">
 <!--
 `d2l-select-outcomes`
 
@@ -29,8 +30,11 @@
 
 			is: 'd2l-outcome',
 
+			behaviors: [
+				window.D2L.PolymerBehaviors.SirenEntityBehavior
+			],
+
 			properties: {
-				entity: Object,
 				selected: {
 					type: Boolean,
 					notify: true

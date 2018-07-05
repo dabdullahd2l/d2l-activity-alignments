@@ -20,13 +20,20 @@
       <h3>Basic d2l-select-outcomes demo</h3>
       <demo-snippet>
         <template>
-          <d2l-select-outcomes></d2l-select-outcomes>
+          <d2l-select-outcomes id="demo-select-outcomes"></d2l-select-outcomes>
+        </template>
+      </demo-snippet>
+
+	  <h3>Basic d2l-outcome demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-outcome id="demo-outcome"></d2l-outcome>
         </template>
       </demo-snippet>
     </div>
 	<script>
 		window.addEventListener('WebComponentsReady', function() {
-			document.querySelector('d2l-select-outcomes').entity = window.D2L.Hypermedia.Siren.Parse({
+			document.getElementById('demo-select-outcomes').entity = window.D2L.Hypermedia.Siren.Parse({
 				entities: [{
 					rel: ['https://api.brightspace.com/rels/__objective'],
 					properties: {
@@ -51,13 +58,16 @@
 					}]
 				}]
 			});
-			document.querySelector('d2l-select-outcomes').alignmentsEntity = window.D2L.Hypermedia.Siren.Parse({
-				entities: [{
-					rel: ['https://api.brightspace.com/rels/__alignment'],
-					links: [{
-						rel: ['https://api.brightspace.com/rels/__objective'],
-						href: 'http://objectives.api.brightspace.com/objective-1'
-					}]
+
+			document.getElementById('demo-outcome').entity = window.D2L.Hypermedia.Siren.Parse({
+				properties: {
+					description: 'Description',
+					jurisdiction: 'Jurisdiction',
+					notation: 'Notation'
+				},
+				links: [{
+					rel: ['self'],
+					href: 'http://objectives.api.brightspace.com/objective-1'
 				}]
 			});
 		});
