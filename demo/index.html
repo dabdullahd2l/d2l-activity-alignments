@@ -38,6 +38,17 @@
 						rel: ['self'],
 						href: 'http://objectives.api.brightspace.com/objective-1'
 					}]
+				}, {
+					rel: ['https://api.brightspace.com/rels/__objective'],
+					properties: {
+						description: 'Description 2',
+						jurisdiction: 'Jurisdiction',
+						notation: 'Notation'
+					},
+					links: [{
+						rel: ['self'],
+						href: 'http://objectives.api.brightspace.com/objective-2'
+					}]
 				}]
 			});
 			document.querySelector('d2l-select-outcomes').alignmentsEntity = window.D2L.Hypermedia.Siren.Parse({
