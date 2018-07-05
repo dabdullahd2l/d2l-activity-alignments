@@ -10,6 +10,8 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+	<link rel="import" href="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.html">
+	<link rel="import" href="./request-mock.html">
     <link rel="import" href="../d2l-select-outcomes.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -33,31 +35,8 @@
     </div>
 	<script>
 		window.addEventListener('WebComponentsReady', function() {
-			document.getElementById('demo-select-outcomes').entity = window.D2L.Hypermedia.Siren.Parse({
-				entities: [{
-					rel: ['https://api.brightspace.com/rels/__objective'],
-					properties: {
-						description: 'Description',
-						jurisdiction: 'Jurisdiction',
-						notation: 'Notation'
-					},
-					links: [{
-						rel: ['self'],
-						href: 'http://objectives.api.brightspace.com/objective-1'
-					}]
-				}, {
-					rel: ['https://api.brightspace.com/rels/__objective'],
-					properties: {
-						description: 'Description 2',
-						jurisdiction: 'Jurisdiction',
-						notation: 'Notation'
-					},
-					links: [{
-						rel: ['self'],
-						href: 'http://objectives.api.brightspace.com/objective-2'
-					}]
-				}]
-			});
+			document.getElementById('demo-select-outcomes').href = 'https://activity-usage.api.brightspace.com/activity-1';
+			document.getElementById('demo-select-outcomes').token = '1234';
 
 			document.getElementById('demo-outcome').entity = window.D2L.Hypermedia.Siren.Parse({
 				properties: {
@@ -67,7 +46,7 @@
 				},
 				links: [{
 					rel: ['self'],
-					href: 'http://objectives.api.brightspace.com/objective-1'
+					href: 'https://outcomes.api.brightspace.com/objective-1'
 				}]
 			});
 		});

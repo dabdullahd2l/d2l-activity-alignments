@@ -1,0 +1,118 @@
+
+<script>
+D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
+	var href = request.url && request.url.href || request.url;
+	switch (href) {
+		case 'https://activity-usage.api.brightspace.com/activity-1':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				properties: {
+				},
+				links: [{
+					rel: ['self'],
+					href: 'https://activities.api.brightspace.com/activity-1'
+				}, {
+					rel: ['https://api.brightspace.com/rels/__alignments'],
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609'
+				}]
+			}));
+		case 'https://alignments.api.brightspace.com/activity/activity-1/6609':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				links: [{
+					rel: ['self'],
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609'
+				}],
+				entities: [{
+					rel: ['__item'],
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/alignment'
+				}],
+				actions: [{
+					name: '__start-update-alignments',
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update',
+					method: 'POST'
+				}]
+			}));
+		case 'https://alignments.api.brightspace.com/activity/activity-1/6609/update':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				links: [{
+					rel: ['self'],
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=false'
+				}],
+				entities: [{
+					rel: ['__item'],
+					links: [{
+						rel: ['__intent'],
+						href: 'https://outcomes.api.brightspace.com/objective-1'
+					}],
+					actions: [{
+						name: '__select',
+						method: 'POST',
+						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update',
+						fields: [{
+							name: 'state',
+							value: '1',
+							type: 'hidden'
+						}]
+					}]
+				}],
+				actions: [{
+					name: '__submit',
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=true',
+					method: 'POST',
+					fields: [{
+						name: 'state',
+						value: '',
+						type: 'hidden'
+					}]
+				}]
+			}));
+		case 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?state=1':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				links: [{
+					rel: ['self'],
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=false'
+				}],
+				entities: [{
+					rel: ['__item'],
+					links: [{
+						rel: ['__intent'],
+						href: 'https://intents.api.brightspace.com/objective-1'
+					}],
+					actions: [{
+						name: '__deselect',
+						method: 'POST',
+						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=false',
+						fields: [{
+							name: 'state',
+							value: '',
+							type: 'hidden'
+						}]
+					}]
+				}],
+				actions: [{
+					name: '__submit',
+					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=true',
+					method: 'POST',
+					fields: [{
+						name: 'state',
+						value: '1',
+						type: 'hidden'
+					}]
+				}]
+			}));
+		case 'https://outcomes.api.brightspace.com/objective-1':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				properties: {
+					description: 'Description',
+					jurisdiction: 'Jurisdiction',
+					notation: 'Notation'
+				},
+				links: [{
+					rel: ['self'],
+					href: 'https://outcomes.api.brightspace.com/objective-1'
+				}]
+			}));
+		default:
+			return Promise.reject(new Error('Not Found: ' + href));
+	}
+};
+</script>
