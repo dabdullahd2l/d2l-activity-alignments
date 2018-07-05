@@ -57,7 +57,7 @@
 		<ul>
 			<template is="dom-repeat" items="[[candidates.entities]]">
 				<li class$="[[_getClass(index, candidates.entities)]]">
-					<d2l-outcome href="[[_getIntent(item)]]" token="[[token]]"></d2l-outcome>
+					<d2l-outcome href="[[_getIntent(item)]]" token="[[token]]" data-index$="[[index]]" on-outcome-select-change="_onOutcomeSelectChange"></d2l-outcome>
 				</li>
 			</template>
 		</ul>
@@ -95,13 +95,34 @@
 			_getCandidates: function(entity) {
 				var self = this;
 				this.performSirenAction(entity.getActionByName('__start-update-alignments'))
-					.then(function(candidatesEntity) {
-						self.candidates = candidatesEntity;
+					.then(function(candidates) {
+						self.candidates = candidates;
 					});
 			},
 
 			_getIntent: function(entity) {
 				return entity && entity.hasLinkByRel('__intent') && entity.getLinkByRel('__intent').href;
+			},
+
+			_onOutcomeSelectChange: function(e) {
+				var self = this;
+				var target = Polymer.dom(e).rootTarget;
+				var index = +target.dataset.index;
+				var candidate = this.candidates.entities[index];
+				if (candidate) {
+					var action;
+					if (e.detail.checked && candidate.getActionByName('__select')) {
+						action = candidate.getActionByName('__select');
+					} else if (!e.detail.checked && candidate.getActionByName('__deselect')) {
+						action = candidate.getActionByName('__deselect');
+					} else {
+						return;
+					}
+					this.performSirenAction(action)
+						.then(function(candidates) {
+							self.candidates = candidates;
+						});
+				}
 			}
 
 		});
