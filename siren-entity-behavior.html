@@ -15,7 +15,7 @@
 		],
 
 		_fetch: function(propName, href, token) {
-			if (typeof propName !== 'string' || typeof href !== 'string' || typeof token !== 'string') {
+			if (typeof propName !== 'string' || !propName || typeof href !== 'string' || !href || typeof token !== 'string') {
 				return;
 			}
 			var self = this;
