@@ -68,7 +68,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 						class: ['__alignment-candidate'],
 						links: [{
 							rel: ['__intent'],
-							href: 'https://outcomes.api.brightspace.com/objective-1'
+							href: 'https://intent.api.brightspace.com/objective-1'
 						}],
 						actions: actions
 					}],
@@ -84,6 +84,13 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					}]
 				});
 			});
+		case 'https://intent.api.brightspace.com/objective-1':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				links: [{
+					rel: ['https://api.brightspace.com/rels/outcome'],
+					href: 'https://outcomes.api.brightspace.com/objective-1'
+				}]
+			}));
 		case 'https://outcomes.api.brightspace.com/objective-1':
 			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
 				properties: {

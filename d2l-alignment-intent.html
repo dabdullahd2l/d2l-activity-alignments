@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./siren-entity-behavior.html">
+<link rel="import" href="./d2l-outcome.html">
+<!--
+`d2l-select-outcomes`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="d2l-alignment-intent">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<d2l-outcome href="[[_getOutcome(entity)]]" token="[[token]]"></d2l-outcome>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'd2l-alignment-intent',
+
+			behaviors: [
+				window.D2L.PolymerBehaviors.SirenEntityBehavior
+			],
+
+			_getOutcome: function(entity) {
+				return entity && entity.hasLinkByRel('https://api.brightspace.com/rels/outcome') && entity.getLinkByRel('https://api.brightspace.com/rels/outcome').href;
+			}
+
+		});
+	</script>
+</dom-module>
