@@ -3,106 +3,226 @@
 D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 	var href = request.url && request.url.href || request.url;
 	switch (href) {
-		case 'https://activity-usage.api.brightspace.com/activity-1':
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609':
 			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
-				properties: {
+				'class': [
+					'activity',
+					'discussion-activity'
+				],
+				'rel': [
+					'https://activities.api.brightspace.com/rels/activity-usage'
+				],
+				'entities': [
+					{
+						'class': [
+							'date',
+							'start-date'
+						],
+						'rel': [
+							'https://api.brightspace.com/rels/date'
+						],
+						'properties': {
+							'date': '2011-01-01T15:00:00.000Z'
+						}
+					}
+				],
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609'
+					},
+					{
+						'rel': [
+							'https://activities.api.brightspace.com/rels/my-activity-usage'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609/users/169'
+					},
+					{
+						'rel': [
+							'https://discussions.api.brightspace.com/rels/topic'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.discussions.api.proddev.d2l/6609/forums/1/topics/1'
+					},
+					{
+						'rel': [
+							'https://api.brightspace.com/rels/organization'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.proddev.d2l/6609'
+					},
+					{
+						'rel': [
+							'https://api.brightspace.com/rels/__alignments'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609'
+					},
+					{
+						'rel': [
+							'https://api.brightspace.com/rels/organization'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.proddev.d2l/6609'
+					}
+				]
+			}));
+
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				'class': [
+					'collection'
+				],
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609'
+					},
+					{
+						'rel': [
+							'https://api.brightspace.com/rels/__activity-usage'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609'
+					}
+				],
+				'actions': [
+					{
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update',
+						'name': '__start-update-alignments',
+						'method': 'POST'
+					}
+				]
+			}));
+
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				'class': [
+					'intent'
+				],
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
+					},
+					{
+						'rel': [
+							'https://api.brightspace.com/rels/outcome'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a'
+					}
+				]
+			}));
+
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				'class': [
+					'outcome'
+				],
+				'properties': {
+					'notation': '',
+					'description': 'English, Grade 11 University Preparation EAE3U',
+					'jurisdiction': 'Ontario'
 				},
-				links: [{
-					rel: ['self'],
-					href: 'https://activities.api.brightspace.com/activity-1'
-				}, {
-					rel: ['https://api.brightspace.com/rels/__alignments'],
-					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609'
-				}]
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a'
+					},
+					{
+						'rel': [
+							'about'
+						],
+						'href': 'http://asn.desire2learn.com/resources/S2831125'
+					}
+				]
 			}));
-		case 'https://alignments.api.brightspace.com/activity/activity-1/6609':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
-				links: [{
-					rel: ['self'],
-					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609'
-				}],
-				entities: [{
-					rel: ['__item'],
-					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/alignment'
-				}],
-				actions: [{
-					name: '__start-update-alignments',
-					href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update',
-					method: 'POST'
-				}]
-			}));
-		case 'https://alignments.api.brightspace.com/activity/activity-1/6609/update':
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update':
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0':
 			return request.formData().then(function(body) {
 				var actions;
 				var state = body && body.get('state');
-				if (state === '1') {
-					actions = [{
-						name: '__deselect',
-						method: 'POST',
-						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update',
-						fields: [{
-							name: 'state',
-							value: '',
-							type: 'hidden'
-						}]
-					}];
+				if (state === '["https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a"]') {
+					actions = [
+						{
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0',
+							'name': '__deselect',
+							'method': 'POST',
+							'fields': [
+								{
+									'type': 'hidden',
+									'name': 'state',
+									'value': ''
+								}
+							]
+						}
+					];
 				} else {
-					actions = [{
-						name: '__select',
-						method: 'POST',
-						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update',
-						fields: [{
-							name: 'state',
-							value: '1',
-							type: 'hidden'
-						}]
-					}];
+					actions = [
+						{
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0',
+							'name': '__select',
+							'method': 'POST',
+							'fields': [
+								{
+									'type': 'hidden',
+									'name': 'state',
+									'value': '["https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a"]'
+								}
+							]
+						}
+					];
 				}
 				return window.D2L.Hypermedia.Siren.Parse({
-					links: [{
-						rel: ['self'],
-						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=false'
-					}],
-					entities: [{
-						rel: ['__item'],
-						class: ['__alignment-candidate'],
-						links: [{
-							rel: ['__intent'],
-							href: 'https://intent.api.brightspace.com/objective-1'
-						}],
-						actions: actions
-					}],
-					actions: [{
-						name: '__submit',
-						href: 'https://alignments.api.brightspace.com/activity/activity-1/6609/update?submit=true',
-						method: 'POST',
-						fields: [{
-							name: 'state',
-							value: state,
-							type: 'hidden'
-						}]
-					}]
+					'class': [
+						'collection'
+					],
+					'entities': [
+						{
+							'class': [
+								'__alignment-candidate'
+							],
+							'rel': [
+								'__item'
+							],
+							'actions': actions,
+							'links': [
+								{
+									'rel': [
+										'__intent'
+									],
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
+								}
+							]
+						}
+					],
+					'links': [
+						{
+							'rel': [
+								'self'
+							],
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0'
+						}
+					],
+					'actions': [
+						{
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=1',
+							'name': '__submit',
+							'method': 'POST',
+							'fields': [
+								{
+									'type': 'text',
+									'name': 'state',
+									'value': '[]'
+								}
+							]
+						}
+					]
 				});
 			});
-		case 'https://intent.api.brightspace.com/objective-1':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
-				links: [{
-					rel: ['https://api.brightspace.com/rels/outcome'],
-					href: 'https://outcomes.api.brightspace.com/objective-1'
-				}]
-			}));
-		case 'https://outcomes.api.brightspace.com/objective-1':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
-				properties: {
-					description: 'Description',
-					jurisdiction: 'Jurisdiction',
-					notation: 'Notation'
-				},
-				links: [{
-					rel: ['self'],
-					href: 'https://outcomes.api.brightspace.com/objective-1'
-				}]
-			}));
 		default:
 			return Promise.reject(new Error('Not Found: ' + href));
 	}

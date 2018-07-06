@@ -106,7 +106,7 @@
 
 			_onOutcomeSelectChange: function(e) {
 				var self = this;
-				var target = Polymer.dom(e).rootTarget;
+				var target = Polymer.dom(e).localTarget;
 				var index = +target.dataset.index;
 				var candidate = this.candidates.entities[index];
 				if (candidate) {
