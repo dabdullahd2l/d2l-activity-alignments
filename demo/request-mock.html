@@ -1,5 +1,24 @@
 
 <script>
+window.d2lfetch.fetch = function(href) {
+	return D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest({ url: href, formData: function() { return Promise.resolve(); } })
+		.then(function(body) {
+			return {
+				ok: true,
+				json: function() {
+					return Promise.resolve(body);
+				}
+			};
+		})
+		.catch(function(err) {
+			return {
+				ok: false,
+				text: function() {
+					return Promise.resolve(err.message);
+				}
+			};
+		});
+};
 D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 	var href = request.url && request.url.href || request.url;
 	switch (href) {

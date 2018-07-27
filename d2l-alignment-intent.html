@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="./siren-entity-behavior.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
 <link rel="import" href="./d2l-outcome.html">
 <!--
 `d2l-select-outcomes`
@@ -24,7 +24,7 @@
 			is: 'd2l-alignment-intent',
 
 			behaviors: [
-				window.D2L.PolymerBehaviors.SirenEntityBehavior
+				D2L.PolymerBehaviors.Siren.EntityBehavior
 			],
 
 			_getOutcome: function(entity) {
