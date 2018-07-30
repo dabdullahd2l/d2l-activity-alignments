@@ -32,6 +32,10 @@
 				color: var(--d2l-color-ferrite);
 			}
 
+			d2l-checkbox {
+				margin: 0;
+			}
+
 			li.d2l-select-outcomes-first {
 				border-top-color: transparent;
 			}
@@ -57,7 +61,9 @@
 		<ul>
 			<template is="dom-repeat" items="[[candidates.entities]]">
 				<li class$="[[_getClass(index, candidates.entities)]]">
-					<d2l-alignment-intent href="[[_getIntent(item)]]" token="[[token]]" data-index$="[[index]]" on-outcome-select-change="_onOutcomeSelectChange"></d2l-alignment-intent>
+					<d2l-checkbox checked="{{selected}}" on-change="_onOutcomeSelectChange" data-index$="[[index]]">
+						<d2l-alignment-intent href="[[_getIntent(item)]]" token="[[token]]"></d2l-alignment-intent>
+					</d2l-checkbox>
 				</li>
 			</template>
 		</ul>

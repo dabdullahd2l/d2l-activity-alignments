@@ -15,14 +15,8 @@
 				display: block;
 				padding: 0.75rem 1rem;
 			}
-
-			d2l-checkbox {
-				margin: 0;
-			}
 		</style>
-		<d2l-checkbox checked="{{selected}}" on-change="_onChange">
-			[[entity.properties.description]]
-		</d2l-checkbox>
+		[[entity.properties.description]]
 	</template>
 
 	<script>
@@ -32,25 +26,7 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityBehavior,
-			],
-
-			properties: {
-				selected: {
-					type: Boolean,
-					notify: true
-				}
-			},
-
-			_onChange: function(e) {
-				this.dispatchEvent(new CustomEvent('outcome-select-change', {
-					bubbles: true,
-					composed: false,
-					detail: {
-						checked: e.target.checked
-					}
-				}));
-			}
-
+			]
 		});
 	</script>
 </dom-module>
