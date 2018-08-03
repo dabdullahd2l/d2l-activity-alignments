@@ -20,18 +20,6 @@
 				display: block;
 			}
 
-			d2l-button {
-				margin-right: 0.5rem;
-			}
-			:host-context([dir="rtl"]) {
-				margin-right: 0;
-				margin-left: 0.5rem;
-			}
-			:host(:dir(rtl)) {
-				margin-right: 0;
-				margin-left: 0.5rem;
-			}
-
 			.main {
 				display: flex;
 				flex-direction: column;
@@ -42,19 +30,12 @@
 				display: flex;
 				justify-content: flex-end;
 			}
-			.buttons {
-				flex: 0 0 auto;
-			}
 		</style>
 		<div class="main">
 			<div class="header">
 				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('cancel')]]"></d2l-button-icon>
 			</div>
 			<d2l-alignment-list href="[[_getAlignments(entity)]]" token="[[token]]"></d2l-alignment-list>
-			<div class="buttons">
-				<d2l-button primary>[[localize('add')]]</d2l-button>
-				<d2l-button>[[localize('cancel')]]</d2l-button>
-			</div>
 		</div>
 	</template>
 
