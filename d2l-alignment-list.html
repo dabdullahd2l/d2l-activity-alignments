@@ -5,6 +5,9 @@
 <link rel="import" href="../d2l-button/d2l-button.html">
 <link rel="import" href="../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-alert/d2l-alert.html">
+<link rel="import" href="../d2l-loading-spinner/d2l-loading-spinner.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/siren-entity-loading.html">
 <link rel="import" href="./d2l-alignment-intent.html">
 <link rel="import" href="./localize-behavior.html">
 <!--
@@ -19,6 +22,18 @@
 		<style>
 			:host {
 				display: block;
+			}
+
+			.content {
+				display: block;
+			}
+
+			d2l-loading-spinner {
+				width: 100%;
+			}
+
+			siren-entity-loading {
+				overflow: hidden;
 			}
 
 			ul {
@@ -72,21 +87,34 @@
 
 			.buttons {
 				flex: 0 0 auto;
+				padding: 4px;
+			}
+
+			d2l-alert {
+				margin-top: 0.5rem;
 			}
 		</style>
-		<ul>
-			<template is="dom-repeat" items="[[candidateEntities]]">
-				<li class$="[[_getClass(index, candidateEntities)]]">
-					<d2l-checkbox checked="[[_getChecked(item)]]" on-change="_onOutcomeSelectChange" data-index$="[[index]]">
-						<d2l-alignment-intent href="[[_getIntent(item)]]" token="[[token]]"></d2l-alignment-intent>
-					</d2l-checkbox>
-				</li>
-			</template>
-		</ul>
-		<div class="buttons">
-			<d2l-button primary on-click="_add">[[localize('add')]]</d2l-button>
-			<d2l-button on-click="_cancel">[[localize('cancel')]]</d2l-button>
-		</div>
+		<siren-entity-loading href="[[_candidatesSelfHref]]" token="[[token]]">
+			<div class="content">
+				<ul>
+					<template is="dom-repeat" items="[[candidateEntities]]">
+						<li class$="[[_getClass(index, candidateEntities)]]">
+							<d2l-checkbox checked="[[_getChecked(item)]]" on-change="_onOutcomeSelectChange" data-index$="[[index]]">
+								<d2l-alignment-intent href="[[_getIntent(item)]]" token="[[token]]"></d2l-alignment-intent>
+							</d2l-checkbox>
+						</li>
+					</template>
+				</ul>
+				<div class="buttons">
+					<d2l-button primary disabled="[[_buttonsDisabled]]" on-click="_add">[[localize('add')]]</d2l-button>
+					<d2l-button disabled="[[_buttonsDisabled]]" on-click="_cancel">[[localize('cancel')]]</d2l-button>
+				</div>
+				<template is="dom-if" if="[[_error]]">
+					<d2l-alert type="error">[[localize('error')]]</d2l-alert>
+				</template>
+			</div>
+			<d2l-loading-spinner slot="loading"></d2l-loading-spinner>
+		</siren-entity-loading>
 	</template>
 
 	<script>
@@ -101,7 +129,15 @@
 			],
 
 			properties: {
-				candidates: Object
+				candidates: Object,
+				_candidatesSelfHref: {
+					type: String,
+					computed: '_getSelfLink(candidates)'
+				},
+				_buttonsDisabled: {
+					type: Boolean,
+					value: true
+				}
 			},
 
 			observers: [
@@ -126,6 +162,7 @@
 
 			_performActionAndUpdate: function(getAction) {
 				var self = this;
+				this._error = false;
 				this.__promises++;
 				this.__promise = Promise.resolve(this.__promise)
 					.then(function() {
@@ -143,9 +180,13 @@
 								});
 						}
 					})
-					.catch(function() {
+					.catch(function(err) {
+						console.error(err);
+						self._buttonsDisabled = false;
+						self._error = true;
 						self.__promises--;
 					});
+				return this.__promise;
 			},
 
 			_getCandidates: function(entity) {
@@ -166,6 +207,7 @@
 			},
 
 			_onOutcomeSelectChange: function(e) {
+				var self = this;
 				var target = Polymer.dom(e).localTarget;
 				var index = +target.dataset.index;
 				this._performActionAndUpdate(function() {
@@ -177,16 +219,21 @@
 							return candidate.getActionByName('__deselect');
 						}
 					}
-				});
+				})
+					.then(function() {
+						self._buttonsDisabled = false;
+					});
 			},
 
 			_add: function() {
+				this._buttonsDisabled = true;
 				this._performActionAndUpdate(function() {
 					return this.candidates.getActionByName('__submit');
 				});
 			},
 
 			_cancel: function() {
+				this._buttonsDisabled = true;
 				this._getCandidates(this.entity);
 			}
 
