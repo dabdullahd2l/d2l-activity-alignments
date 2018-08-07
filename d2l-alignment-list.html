@@ -181,7 +181,7 @@
 						}
 					})
 					.catch(function(err) {
-						console.error(err);
+						console.error(err); // eslint-disable-line no-console
 						self._buttonsDisabled = false;
 						self._error = true;
 						self.__promises--;
