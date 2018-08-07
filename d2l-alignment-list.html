@@ -118,9 +118,7 @@
 				<div class="buttons">
 					<d2l-button primary disabled="[[_buttonsDisabled]]" on-click="_add">[[localize('add')]]</d2l-button>
 					<d2l-button disabled="[[_buttonsDisabled]]" on-click="_cancel">[[localize('cancel')]]</d2l-button>
-					<template is="dom-if" if="[[_loading]]">
-						<d2l-loading-spinner></d2l-loading-spinner>
-					</template>
+					<d2l-loading-spinner hidden$="[[!_loading]]"></d2l-loading-spinner>
 				</div>
 				<template is="dom-if" if="[[_error]]">
 					<d2l-alert type="error">[[localize('error')]]</d2l-alert>
@@ -157,12 +155,13 @@
 				},
 				_loading: {
 					type: Boolean,
-					computed: '_getLoading(__promises)'
+					value: false
 				}
 			},
 
 			observers: [
-				'_getCandidates(entity)'
+				'_getCandidates(entity)',
+				'_updateLoading(__promises)'
 			],
 
 			ready: function() {
@@ -187,11 +186,11 @@
 				this.__promises++;
 				this.__promise = Promise.resolve(this.__promise)
 					.then(function() {
-						self.__promises--;
 						var action = getAction.call(self);
 						if (action) {
 							return self.performSirenAction(action)
 								.then(function(candidates) {
+									self.__promises--;
 									self.candidates = candidates;
 									if (self.__promises <= 0) {
 										self.__promises = 0;
@@ -258,8 +257,15 @@
 				this._getCandidates(this.entity);
 			},
 
-			_getLoading: function(promises) {
-				return promises > 0;
+			_updateLoading: function(promises) {
+				if (promises > 0) {
+					this.debounce('loading', function() {
+						this._loading = this.__promises > 0;
+					}, 1000);
+				} else {
+					this.cancelDebouncer('loading');
+					this._loading = false;
+				}
 			}
 
 		});
