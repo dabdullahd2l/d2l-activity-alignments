@@ -19,9 +19,55 @@
       </template>
     </test-fixture>
 
+	<test-fixture id="d2l-outcome">
+      <template>
+        <d2l-outcome
+			href="static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json"
+			token=""
+		></d2l-outcome>
+      </template>
+    </test-fixture>
+
     <script>
+		/* global suite, a11ySuite, fastdom */
+		function flush(fastdom) {
+			var writes = fastdom.writes;
+			var reads = fastdom.reads;
+
+			runTasks(reads);
+			runTasks(writes);
+
+			fastdom.scheduled = false;
+		}
+		function runTasks(tasks) {
+			var task; while (task = tasks.shift()) task();
+		}
 		suite('d2l-select-outcomes', function() {
 			a11ySuite('a11y');
+		});
+
+		suite('d2l-outcome', function() {
+			a11ySuite('d2l-outcome', [], function() {
+				var entity = {
+					'class': ['outcome'],
+					'properties': {
+						'notation': '',
+						'description': 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.'
+					},
+					'links': [{
+						'rel': ['about'],
+						'type': 'text/html',
+						'href': 'http://asn.desire2learn.com/resources/S2843231'
+					}, {
+						'rel': ['self'],
+						'href': 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json'
+					}]
+				};
+				entity = window.D2L.Hypermedia.Siren.Parse(entity);
+				window.D2L.Siren.EntityStore.update('static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json', '', entity);
+				flush(fastdom);
+				Polymer.dom.flush();
+			});
 		});
     </script>
   </body>

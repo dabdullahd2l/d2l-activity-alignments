@@ -1,0 +1,15 @@
+{
+  "class": ["outcome"],
+  "properties": {
+    "notation": "",
+    "description": "Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone."
+  },
+  "links": [{
+    "rel": ["about"],
+    "type": "text/html",
+    "href": "http://asn.desire2learn.com/resources/S2843231"
+  }, {
+    "rel": ["self"],
+    "href": "static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json"
+  }]
+}

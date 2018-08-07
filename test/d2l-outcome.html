@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>d2l-outcome test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+
+    <link rel="import" href="../d2l-outcome.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <d2l-outcome></d2l-outcome>
+      </template>
+    </test-fixture>
+
+    <script>
+		/* global suite, test, assert, fixture, setup, stubWhitelist */
+		suite('d2l-outcome', function() {
+			test('instantiating the element works', function() {
+				var element = fixture('basic');
+				assert.equal(element.is, 'd2l-outcome');
+			});
+
+			suite('smoke test', function() {
+				var element;
+				setup(function(done) {
+					element = fixture('basic');
+					var href = 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
+					function waitForLoad(entity, error) {
+						window.D2L.Siren.EntityStore.removeListener(
+							href,
+							'',
+							waitForLoad
+						);
+						if (error) {
+							done(error);
+							return;
+						}
+						setTimeout(function() {
+							done();
+						});
+					}
+					stubWhitelist();
+					window.D2L.Siren.EntityStore.addListener(
+						href,
+						'',
+						waitForLoad
+					);
+					element.href = href;
+					element.token = '';
+				});
+
+				test('renders outcome', function() {
+					var content = Polymer.dom(element.$$('siren-entity-loading')).textContent.trim();
+					assert.equal(content, 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.');
+				});
+			});
+		});
+    </script>
+  </body>
+</html>
