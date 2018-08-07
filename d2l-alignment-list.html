@@ -73,21 +73,31 @@
 				color: var(--d2l-color-celestine);
 			}
 
-			d2l-button {
+			d2l-button,
+			.buttons d2l-loading-spinner {
 				margin-right: 0.5rem;
+				width: auto;
 			}
-			:host-context([dir="rtl"]) d2l-button {
+			:host-context([dir="rtl"]) d2l-button,
+			:host-context([dir="rtl"]) .buttons d2l-loading-spinner {
 				margin-right: 0;
 				margin-left: 0.5rem;
 			}
-			:host(:dir(rtl)) d2l-button {
+			:host(:dir(rtl)) d2l-button,
+			:host(:dir(rtl)) .buttons d2l-loading-spinner {
 				margin-right: 0;
 				margin-left: 0.5rem;
 			}
 
+			.buttons d2l-loading-spinner {
+				--d2l-loading-spinner-size: 34px;
+			}
+
 			.buttons {
+				display: flex;
 				flex: 0 0 auto;
 				padding: 4px;
+				align-items: center;
 			}
 
 			d2l-alert {
@@ -108,6 +118,9 @@
 				<div class="buttons">
 					<d2l-button primary disabled="[[_buttonsDisabled]]" on-click="_add">[[localize('add')]]</d2l-button>
 					<d2l-button disabled="[[_buttonsDisabled]]" on-click="_cancel">[[localize('cancel')]]</d2l-button>
+					<template is="dom-if" if="[[_loading]]">
+						<d2l-loading-spinner></d2l-loading-spinner>
+					</template>
 				</div>
 				<template is="dom-if" if="[[_error]]">
 					<d2l-alert type="error">[[localize('error')]]</d2l-alert>
@@ -137,6 +150,14 @@
 				_buttonsDisabled: {
 					type: Boolean,
 					value: true
+				},
+				__promises: {
+					type: Number,
+					value: 0
+				},
+				_loading: {
+					type: Boolean,
+					computed: '_getLoading(__promises)'
 				}
 			},
 
@@ -235,6 +256,10 @@
 			_cancel: function() {
 				this._buttonsDisabled = true;
 				this._getCandidates(this.entity);
+			},
+
+			_getLoading: function(promises) {
+				return promises > 0;
 			}
 
 		});

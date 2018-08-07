@@ -4,6 +4,7 @@
 <link rel="import" href="../d2l-button/d2l-button.html">
 <link rel="import" href="../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-alert/d2l-alert.html">
 <link rel="import" href="./d2l-alignment-list.html">
 <link rel="import" href="./localize-behavior.html">
 <!--
@@ -36,6 +37,9 @@
 				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('cancel')]]"></d2l-button-icon>
 			</div>
 			<d2l-alignment-list href="[[_getAlignments(entity)]]" token="[[token]]"></d2l-alignment-list>
+			<template is="dom-if" if="[[_showError]]">
+				<d2l-alert type="error">[[localize('error')]]</d2l-alert>
+			</template>
 		</div>
 	</template>
 
@@ -44,10 +48,34 @@
 
 			is: 'd2l-select-outcomes',
 
+			properties: {
+				_showError: {
+					type: Boolean,
+					value: false
+				}
+			},
+
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityBehavior,
 				window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior
 			],
+
+			ready: function() {
+				this._boundHandleError = this._handleError.bind(this);
+			},
+
+			attached: function() {
+				this._showError = false;
+				this.addEventListener('d2l-siren-entity-error', this._boundHandleError);
+			},
+
+			detached: function() {
+				this.removeEventListener('d2l-siren-entity-error', this._boundHandleError);
+			},
+
+			_handleError: function() {
+				this._showError = true;
+			},
 
 			_getClass: function(index, objectives) {
 				if (index === 0) {
