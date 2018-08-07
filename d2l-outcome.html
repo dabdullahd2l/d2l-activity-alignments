@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-checkbox/d2l-checkbox.html">
-<link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
+<link rel="import" href="../d2l-loading-spinner/d2l-loading-spinner.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/siren-entity-loading.html">
 <!--
 `d2l-select-outcomes`
 
@@ -13,9 +14,13 @@
 		<style>
 			:host {
 				display: block;
+				width: 100%;
 			}
 		</style>
-		[[entity.properties.description]]
+		<siren-entity-loading href="[[href]]" token="[[token]]">
+			[[entity.properties.description]]
+			<d2l-loading-spinner slot="loading"></d2l-loading-spinner>
+		</siren-entity-loading>
 	</template>
 
 	<script>
@@ -24,7 +29,7 @@
 			is: 'd2l-outcome',
 
 			behaviors: [
-				D2L.PolymerBehaviors.Siren.EntityBehavior,
+				D2L.PolymerBehaviors.Siren.EntityLoadingBehavior,
 			]
 		});
 	</script>
