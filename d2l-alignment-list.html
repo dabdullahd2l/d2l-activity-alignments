@@ -249,12 +249,22 @@
 				this._buttonsDisabled = true;
 				this._performActionAndUpdate(function() {
 					return this.candidates.getActionByName('__submit');
-				});
+				})
+					.then(function() {
+						this.dispatchEvent(new CustomEvent('d2l-alignment-list-added', {
+							bubbles: true,
+							composed: true
+						}));
+					}.bind(this));
 			},
 
 			_cancel: function() {
 				this._buttonsDisabled = true;
 				this._getCandidates(this.entity);
+				this.dispatchEvent(new CustomEvent('d2l-alignment-list-cancelled', {
+					bubbles: true,
+					composed: true
+				}));
 			},
 
 			_updateLoading: function(promises) {
