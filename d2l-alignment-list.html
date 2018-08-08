@@ -116,6 +116,7 @@
 							<d2l-checkbox
 								checked="[[_getChecked(item)]]"
 								on-change="_onOutcomeSelectChange"
+								on-keydown="_onKeyDown"
 								data-index$="[[index]]"
 								aria-labelledby="[[id]]alignment-intent-[[index]]"
 							>
@@ -177,9 +178,59 @@
 				'_updateLoading(__promises)'
 			],
 
+			_keyCodes: {
+				DOWN: 40,
+				UP: 38
+			},
+
 			ready: function() {
 				this.__promise = null;
 				this.__promises = 0;
+			},
+
+			_onKeyDown: function(e) {
+				var target = Polymer.dom(e).localTarget;
+				if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
+					// prevent scrolling when up/down arrows pressed
+					e.preventDefault();
+					e.stopPropagation();
+					if (e.keyCode === this._keyCodes.DOWN) {
+						this._focusNext(target);
+					} else if (e.keyCode === this._keyCodes.UP) {
+						this._focusPrevious(target);
+					}
+					return;
+				}
+			},
+
+			_focusNext: function(target) {
+				var index = +target.dataset.index;
+				var list = this.$$('ul');
+				var item;
+				var children = Polymer.dom(list).children.filter(function(child) {
+					return child.tagName && child.tagName.toUpperCase() === 'LI';
+				});
+				if (children[index + 1]) {
+					item = children[index + 1];
+				} else {
+					item = children[0];
+				}
+				item && item.firstChild && item.firstChild.focus();
+			},
+
+			_focusPrevious: function(target) {
+				var index = +target.dataset.index;
+				var list = this.$$('ul');
+				var item;
+				var children = Polymer.dom(list).children.filter(function(child) {
+					return child.tagName && child.tagName.toUpperCase() === 'LI';
+				});
+				if (children[index - 1]) {
+					item = children[index - 1];
+				} else {
+					item = children[children.length - 1];
+				}
+				item && item.firstChild && item.firstChild.focus();
 			},
 
 			_getClass: function(index, candidates) {
