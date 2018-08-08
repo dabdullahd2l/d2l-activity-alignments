@@ -34,7 +34,7 @@
 		</style>
 		<div class="main">
 			<div class="header">
-				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('cancel')]]"></d2l-button-icon>
+				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('cancel')]]" on-click="_close"></d2l-button-icon>
 			</div>
 			<d2l-alignment-list href="[[_getAlignments(entity)]]" token="[[token]]"></d2l-alignment-list>
 			<template is="dom-if" if="[[_showError]]">
@@ -88,6 +88,13 @@
 
 			_getAlignments: function(entity) {
 				return entity && entity.hasLinkByRel('https://api.brightspace.com/rels/__alignments') && entity.getLinkByRel('https://api.brightspace.com/rels/__alignments').href;
+			},
+
+			_close: function() {
+				this.dispatchEvent(new CustomEvent('d2l-select-outcomes-closed', {
+					bubbles: true,
+					composed: true
+				}));
 			}
 
 		});
