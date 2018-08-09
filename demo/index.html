@@ -24,34 +24,22 @@
       <h3>Basic d2l-select-outcomes demo</h3>
       <demo-snippet>
         <template>
-          <d2l-select-outcomes id="demo-select-outcomes"></d2l-select-outcomes>
+          <d2l-select-outcomes
+		  	href="https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609"
+			token="1234"
+		  ></d2l-select-outcomes>
         </template>
       </demo-snippet>
 
 	  <h3>Basic d2l-outcome demo</h3>
       <demo-snippet>
         <template>
-          <d2l-outcome id="demo-outcome"></d2l-outcome>
+          <d2l-outcome
+		  	href="https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a"
+			token="1234"
+		  ></d2l-outcome>
         </template>
       </demo-snippet>
     </div>
-	<script>
-		window.addEventListener('WebComponentsReady', function() {
-			document.getElementById('demo-select-outcomes').href = 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609';
-			document.getElementById('demo-select-outcomes').token = '1234';
-
-			document.getElementById('demo-outcome').entity = window.D2L.Hypermedia.Siren.Parse({
-				properties: {
-					description: 'Description',
-					jurisdiction: 'Jurisdiction',
-					notation: 'Notation'
-				},
-				links: [{
-					rel: ['self'],
-					href: 'https://outcomes.api.brightspace.com/objective-1'
-				}]
-			});
-		});
-	</script>
   </body>
 </html>
