@@ -1,74 +1,234 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<html lang='en'>
 
-    <title>d2l-select-outcomes test</title>
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes'>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
-	<script src="../../web-component-tester/data/a11ySuite.js"></script>
+	<title>d2l-select-outcomes test</title>
 
-    <link rel="import" href="../d2l-select-outcomes.html">
-  </head>
-  <body>
-    <test-fixture id="a11y">
-      <template>
-        <d2l-select-outcomes></d2l-select-outcomes>
-      </template>
-    </test-fixture>
+	<script src='../../webcomponentsjs/webcomponents-lite.js'></script>
+	<script src='../../web-component-tester/browser.js'></script>
 
-	<test-fixture id="d2l-outcome">
-      <template>
-        <d2l-outcome
-			href="static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json"
-			token=""
-		></d2l-outcome>
-      </template>
-    </test-fixture>
+	<link rel='import' href='../d2l-select-outcomes.html'>
+</head>
 
-    <script>
-		/* global suite, a11ySuite, fastdom */
-		function flush(fastdom) {
-			var writes = fastdom.writes;
-			var reads = fastdom.reads;
+<body>
+	<test-fixture id='a11y'>
+		<template>
+			<d2l-select-outcomes></d2l-select-outcomes>
+		</template>
+	</test-fixture>
 
-			runTasks(reads);
-			runTasks(writes);
-
-			fastdom.scheduled = false;
-		}
-		function runTasks(tasks) {
-			var task; while (task = tasks.shift()) task();
-		}
+	<script>
+		/* global suite, setup, test, fixture, sinon, axs, assert */
 		suite('d2l-select-outcomes', function() {
-			a11ySuite('a11y');
-		});
+			suite('a11y', function() {
+				setup(function(done) {
+					function stubFetch(href, entity) {
+						window.d2lfetch.fetch
+							.withArgs(href)
+							.returns(Promise.resolve({
+								ok: true,
+								json: function() {
+									return Promise.resolve(entity);
+								}
+							}));
+					}
+					var fixtureElement = fixture('a11y');
+					sinon.stub(window.d2lfetch, 'fetch');
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609', {
+							'class': ['activity', 'discussion-activity'],
+							'entities': [{
+								'class': ['date', 'start-date'],
+								'rel': ['https://api.brightspace.com/rels/date'],
+								'properties': {
+									'date': '2011-01-01T15:00:00.000Z'
+								}
+							}],
+							'links': [{
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
+							}, {
+								'rel': ['https://activities.api.brightspace.com/rels/my-activity-usage'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609/users/169'
+							}, {
+								'rel': ['https://discussions.api.brightspace.com/rels/topic'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.discussions.api.dev.brightspace.com/6609/forums/1/topics/1'
+							}, {
+								'rel': ['https://api.brightspace.com/rels/organization'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.dev.brightspace.com/6609'
+							}, {
+								'rel': ['https://api.brightspace.com/rels/__alignments'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609', {
+							'class': ['collection', 'alignments'],
+							'links': [{
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
+							}, {
+								'rel': ['https://api.brightspace.com/rels/__activity-usage'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
+							}],
+							'actions': [{
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update',
+								'name': '__start-update-alignments',
+								'method': 'POST'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update', {
+							'class': ['collection'],
+							'actions': [{
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=1',
+								'name': '__submit',
+								'method': 'POST',
+								'fields': [{
+									'type': 'text',
+									'name': 'state',
+									'value': ''
+								}]
+							}],
+							'entities': [{
+								'class': ['__alignment-candidate'],
+								'rel': ['item'],
+								'actions': [{
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
+									'name': '__select',
+									'method': 'POST',
+									'fields': [{
+										'type': 'hidden',
+										'name': 'state',
+										'value': ''
+									}]
+								}],
+								'links': [{
+									'rel': ['__intent'],
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+								}]
+							}, {
+								'class': ['__alignment-candidate'],
+								'rel': ['item'],
+								'actions': [{
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
+									'name': '__select',
+									'method': 'POST',
+									'fields': [{
+										'type': 'hidden',
+										'name': 'state',
+										'value': ''
+									}]
+								}],
+								'links': [{
+									'rel': ['__intent'],
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+								}]
+							}],
+							'links': [{
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
+							'class': ['intent'],
+							'links': [{
+								'rel': ['collection'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
+							}, {
+								'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+							}, {
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
+							'class': ['intent'],
+							'links': [{
+								'rel': ['collection'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
+							}, {
+								'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+							}, {
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
+							'class': ['outcome'],
+							'properties': {
+								'notation': '',
+								'description': 'compare a manual accounting system with a computerized accounting system'
+							},
+							'links': [{
+								'rel': ['about'],
+								'type': 'text/html',
+								'href': 'http://asn.desire2learn.com/resources/S2698474'
+							}, {
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+							}]
+						}
+					);
+					stubFetch(
+						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
+							'class': ['outcome'],
+							'properties': {
+								'notation': '',
+								'description': 'compare a manual accounting system with a computerized accounting system'
+							},
+							'links': [{
+								'rel': ['about'],
+								'type': 'text/html',
+								'href': 'http://asn.desire2learn.com/resources/S2698474'
+							}, {
+								'rel': ['self'],
+								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+							}]
+						}
+					);
+					function waitForFetch() {
+						window.D2L.Siren.EntityStore.removeListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
+						Polymer.dom.flush();
+						// Wait for animations to complete
+						setTimeout(done, 500);
+					}
+					window.D2L.Siren.EntityStore.addListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
+					fixtureElement.href = 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609';
+					fixtureElement.token = '';
+				});
 
-		suite('d2l-outcome', function() {
-			a11ySuite('d2l-outcome', [], function() {
-				var entity = {
-					'class': ['outcome'],
-					'properties': {
-						'notation': '',
-						'description': 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.'
-					},
-					'links': [{
-						'rel': ['about'],
-						'type': 'text/html',
-						'href': 'http://asn.desire2learn.com/resources/S2843231'
-					}, {
-						'rel': ['self'],
-						'href': 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json'
-					}]
-				};
-				entity = window.D2L.Hypermedia.Siren.Parse(entity);
-				window.D2L.Siren.EntityStore.update('static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json', '', entity);
-				flush(fastdom);
-				Polymer.dom.flush();
+				test('A11y Audit - Fixture: d2l-select-outcomes', function() {
+					var axsConfig = new axs.AuditConfiguration();
+					axsConfig.scope = document.body;
+					axsConfig.showUnsupportedRulesWarning = false;
+					var auditResults = axs.Audit.run(axsConfig);
+					auditResults.forEach(function(result) {
+						if (result.result === 'NA') {
+							return;
+						}
+						console.info(result.rule.heading); // eslint-disable-line no-console
+						if (result.result === 'FAIL') {
+							assert.fail(result.result, 'FAIL', axs.Audit.accessibilityErrorMessage(result), '!==');
+						}
+					});
+				});
 			});
 		});
-    </script>
-  </body>
+	</script>
+</body>
+
 </html>
