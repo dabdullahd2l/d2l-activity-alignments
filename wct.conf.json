@@ -1,8 +1,15 @@
 {
 	"plugins": {
-		"local": {
-			"browsers": ["chrome"]
-		},
+    "local": {
+      "browsers": [
+        {
+          "browserName": "chrome"
+        }
+      ],
+      "browserOptions": {
+        "chrome": ["headless", "disable-gpu", "no-sandbox"]
+      }
+    },
 		"sauce": {
 			"browsers": [
 				{
