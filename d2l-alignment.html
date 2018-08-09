@@ -1,0 +1,66 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-store.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
+<link rel="import" href="../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+<link rel="import" href="./d2l-alignment-intent.html">
+<link rel="import" href="./localize-behavior.html">
+<!--
+`d2l-select-outcomes`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="d2l-alignment">
+	<template>
+		<style>
+			:host {
+				display: flex;
+			}
+
+			d2l-alignment-intent {
+				flex: 1;
+			}
+		</style>
+		<d2l-alignment-intent href="[[_getIntent(entity)]]" token="[[token]]"></d2l-alignment-intent>
+		<template is="dom-if" if="[[_hasRemoveAlignment(entity)]]">
+			<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('removeAlignment')]]" on-click="_remove"></d2l-button-icon>
+		</template>
+	</template>
+
+	<script>
+		Polymer({
+
+			is: 'd2l-alignment',
+
+			behaviors: [
+				D2L.PolymerBehaviors.Siren.EntityBehavior,
+				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
+				window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior
+			],
+
+			_getIntent: function(entity) {
+				return entity && entity.hasLinkByRel('https://api.brightspace.com/rels/__intent') && entity.getLinkByRel('https://api.brightspace.com/rels/__intent').href;
+			},
+
+			_hasRemoveAlignment: function(entity) {
+				return entity && entity.hasActionByName('__remove-alignment');
+			},
+
+			_remove: function() {
+				var action = this.entity && this.entity.getActionByName('__remove-alignment');
+				if (action) {
+					this.performSirenAction(action)
+						.catch(function() {})
+						.then(function() {
+							var alignments = this.entity && this.entity.getLinkByRel('collection');
+							if (alignments) {
+								window.D2L.Siren.EntityStore.fetch(alignments.href, this.token, true);
+							}
+						}.bind(this));
+				}
+			}
+
+		});
+	</script>
+</dom-module>
