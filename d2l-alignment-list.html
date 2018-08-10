@@ -25,7 +25,7 @@
 				width: 100%;
 			}
 
-			.content {
+			.d2l-alignment-list-content {
 				display: flex;
 				flex-direction: column;
 				flex: 1;
@@ -48,22 +48,27 @@
 
 			ul {
 				padding: 0;
-				flex: 1 1 auto;
 				overflow: auto;
-				border: 1px solid transparent;
-				border-top-color: var(--d2l-color-gypsum);
-				border-bottom-color: var(--d2l-color-gypsum);
+				margin: 0;
+			}
+
+			li.d2l-select-outcomes-first {
+				margin-top: 1rem;
 			}
 
 			li {
 				position: relative;
 				z-index: 1;
 				list-style-type: none;
-				margin-top: -1px;
 				border: 1px solid transparent;
 				border-top-color: var(--d2l-color-gypsum);
 				color: var(--d2l-color-ferrite);
-				padding: 0.75rem 1.25rem;
+				padding: 0.75rem 0;
+			}
+
+			li.d2l-select-outcomes-last {
+				margin-bottom: 1rem;
+				border-bottom-color: var(--d2l-color-gypsum);
 			}
 
 			d2l-alert {
@@ -71,10 +76,10 @@
 			}
 		</style>
 		<siren-entity-loading href="[[href]]" token="[[token]]">
-			<div class="content">
+			<div class="d2l-alignment-list-content">
 				<ul aria-busy="[[_loading]]">
 					<template is="dom-repeat" items="[[entity.entities]]">
-						<li>
+						<li class$="[[_getClass(index, entity.entities)]]">
 							<d2l-alignment
 								id$="[[id]]alignment-intent-[[index]]"
 								href="[[_getAlignment(item)]]"
@@ -104,7 +109,18 @@
 
 			_getAlignment: function(entity) {
 				return entity && entity.href || (entity && entity.hasLinkByRel('self') && entity.getLinkByRel('self').href);
-			}
+			},
+
+			_getClass: function(index, candidates) {
+				var className = '';
+				if (index === 0) {
+					className += 'd2l-select-outcomes-first';
+				}
+				if (index === candidates.length - 1) {
+					className += ' d2l-select-outcomes-last';
+				}
+				return className;
+			},
 
 		});
 	</script>
