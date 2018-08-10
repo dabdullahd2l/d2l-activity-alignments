@@ -21,6 +21,19 @@
 			d2l-alignment-intent {
 				flex: 1;
 			}
+
+			d2l-button-icon {
+				margin-right: 2px;
+			}
+
+			:host-context([dir="rtl"]) d2l-button-icon {
+				margin-right: 0;
+				margin-left: 2px;
+			}
+			:host(:dir(rtl)) d2l-button-icon {
+				margin-right: 0;
+				margin-left: 2px;
+			}
 		</style>
 		<d2l-alignment-intent href="[[_getIntent(entity)]]" token="[[token]]"></d2l-alignment-intent>
 		<template is="dom-if" if="[[_hasRemoveAlignment(entity)]]">

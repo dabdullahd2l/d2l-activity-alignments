@@ -25,7 +25,7 @@
 				width: 100%;
 			}
 
-			.content {
+			.d2l-alignment-update-content {
 				display: flex;
 				flex-direction: column;
 				flex: 1;
@@ -48,7 +48,6 @@
 
 			ul {
 				padding: 0;
-				flex: 1 1 auto;
 				overflow: auto;
 				border: 1px solid transparent;
 				border-top-color: var(--d2l-color-gypsum);
@@ -119,7 +118,7 @@
 			}
 		</style>
 		<siren-entity-loading href="[[_candidatesSelfHref]]" token="[[token]]">
-			<div class="content">
+			<div class="d2l-alignment-update-content">
 				<ul role="listbox" aria-multiselectable="true" aria-busy="[[_loading]]">
 					<template is="dom-repeat" items="[[candidateEntities]]">
 						<li
@@ -329,6 +328,7 @@
 					return this.candidates.getActionByName('__submit');
 				})
 					.then(function() {
+						window.D2L.Siren.EntityStore.fetch(this.href, this.token, true);
 						this.dispatchEvent(new CustomEvent('d2l-alignment-list-added', {
 							bubbles: true,
 							composed: true
