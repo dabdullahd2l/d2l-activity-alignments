@@ -60,7 +60,7 @@
 								'rel': ['https://api.brightspace.com/rels/organization'],
 								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.dev.brightspace.com/6609'
 							}, {
-								'rel': ['https://api.brightspace.com/rels/__alignments'],
+								'rel': ['https://alignments.api.brightspace.com/rels/collection'],
 								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
 							}]
 						}
@@ -72,12 +72,12 @@
 								'rel': ['self'],
 								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
 							}, {
-								'rel': ['https://api.brightspace.com/rels/__activity-usage'],
+								'rel': ['https://activities.api.brightspace.com/rels/activity-usage'],
 								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
 							}],
 							'actions': [{
 								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update',
-								'name': '__start-update-alignments',
+								'name': 'start-update-alignments',
 								'method': 'POST'
 							}]
 						}
@@ -96,11 +96,11 @@
 								}]
 							}],
 							'entities': [{
-								'class': ['__alignment-candidate'],
+								'class': ['alignment-candidate'],
 								'rel': ['item'],
 								'actions': [{
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
-									'name': '__select',
+									'name': 'select',
 									'method': 'POST',
 									'fields': [{
 										'type': 'hidden',
@@ -109,15 +109,15 @@
 									}]
 								}],
 								'links': [{
-									'rel': ['__intent'],
+									'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
 								}]
 							}, {
-								'class': ['__alignment-candidate'],
+								'class': ['alignment-candidate'],
 								'rel': ['item'],
 								'actions': [{
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
-									'name': '__select',
+									'name': 'select',
 									'method': 'POST',
 									'fields': [{
 										'type': 'hidden',
@@ -126,7 +126,7 @@
 									}]
 								}],
 								'links': [{
-									'rel': ['__intent'],
+									'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
 								}]
 							}],

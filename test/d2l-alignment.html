@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>d2l-alignment test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+
+    <link rel="import" href="../d2l-alignment.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <d2l-alignment></d2l-alignment>
+      </template>
+    </test-fixture>
+
+    <script>
+		/* global suite, test, assert, fixture, setup, stubWhitelist */
+		suite('d2l-alignment', function() {
+			test('instantiating the element works', function() {
+				var element = fixture('basic');
+				assert.equal(element.is, 'd2l-alignment');
+			});
+
+			suite('smoke test', function() {
+				var element;
+				setup(function(done) {
+					element = fixture('basic');
+					var href = 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
+					function waitForLoad(entity, error) {
+						window.D2L.Siren.EntityStore.removeListener(
+							href,
+							'',
+							waitForLoad
+						);
+						if (error) {
+							done(error);
+							return;
+						}
+						setTimeout(function() {
+							done();
+						});
+					}
+					stubWhitelist();
+					window.D2L.Siren.EntityStore.addListener(
+						href,
+						'',
+						waitForLoad
+					);
+					element.href = 'static-data/alignments/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
+					element.token = '';
+				});
+
+				test('sets d2l-outcome href', function() {
+					var outcome = element.$$('d2l-alignment-intent').$$('d2l-outcome');
+					assert.equal(outcome.href, 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json');
+				});
+			});
+		});
+    </script>
+  </body>
+</html>
