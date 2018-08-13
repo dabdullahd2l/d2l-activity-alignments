@@ -34,16 +34,8 @@
 				display: flex;
 				justify-content: flex-end;
 			}
-
-			d2l-alignment-update {
-				height: calc(100% - 20px);
-				margin-top: 20px;
-			}
 		</style>
 		<div class="main">
-			<div class="header">
-				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('close')]]" on-click="_close"></d2l-button-icon>
-			</div>
 			<d2l-alignment-update href="[[_getAlignments(entity)]]" token="[[token]]"></d2l-alignment-update>
 			<template is="dom-if" if="[[_showError]]">
 				<d2l-alert type="error">[[localize('error')]]</d2l-alert>
@@ -87,13 +79,6 @@
 
 			_getAlignments: function(entity) {
 				return entity && entity.hasLinkByRel('https://api.brightspace.com/rels/__alignments') && entity.getLinkByRel('https://api.brightspace.com/rels/__alignments').href;
-			},
-
-			_close: function() {
-				this.dispatchEvent(new CustomEvent('d2l-select-outcomes-closed', {
-					bubbles: true,
-					composed: true
-				}));
 			}
 
 		});
