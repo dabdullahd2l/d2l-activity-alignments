@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
 <link rel="import" href="../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
+<link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-button/d2l-button.html">
 <link rel="import" href="../d2l-button/d2l-button-icon.html">
@@ -163,7 +164,8 @@
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityBehavior,
 				D2L.PolymerBehaviors.Siren.SirenActionBehavior,
-				window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior
+				window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior,
+				window.D2L.Hypermedia.HMConstantsBehavior
 			],
 
 			properties: {
@@ -291,16 +293,16 @@
 					return;
 				}
 				this._performActionAndUpdate(function() {
-					return entity.getActionByName('__start-update-alignments');
+					return entity.getActionByName(this.HypermediaActions.outcomes.startUpdateAlignments);
 				});
 			},
 
 			_getChecked: function(candidate) {
-				return candidate.hasClass('__selected');
+				return candidate.hasClass(this.HypermediaClasses.alignments.selected);
 			},
 
 			_getIntent: function(entity) {
-				return entity && entity.hasLinkByRel('__intent') && entity.getLinkByRel('__intent').href;
+				return entity && entity.hasLinkByRel(this.HypermediaRels.Outcomes.intent) && entity.getLinkByRel(this.HypermediaRels.Outcomes.intent).href;
 			},
 
 			_onOutcomeSelectChange: function(e) {
@@ -310,10 +312,10 @@
 				this._performActionAndUpdate(function() {
 					var candidate = this.candidates.entities[index];
 					if (candidate) {
-						if (e.target.checked && candidate.getActionByName('__select')) {
-							return candidate.getActionByName('__select');
-						} else if (!e.target.checked && candidate.getActionByName('__deselect')) {
-							return candidate.getActionByName('__deselect');
+						if (e.target.checked && candidate.getActionByName(this.HypermediaActions.outcomes.select)) {
+							return candidate.getActionByName(this.HypermediaActions.outcomes.select);
+						} else if (!e.target.checked && candidate.getActionByName(this.HypermediaActions.outcomes.deselect)) {
+							return candidate.getActionByName(this.HypermediaActions.outcomes.deselect);
 						}
 					}
 				})
@@ -325,7 +327,7 @@
 			_add: function() {
 				this._buttonsDisabled = true;
 				this._performActionAndUpdate(function() {
-					return this.candidates.getActionByName('__submit');
+					return this.candidates.getActionByName(this.HypermediaActions.outcomes.submit);
 				})
 					.then(function() {
 						window.D2L.Siren.EntityStore.fetch(this.href, this.token, true);
