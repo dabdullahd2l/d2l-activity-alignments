@@ -293,7 +293,7 @@
 					return;
 				}
 				this._performActionAndUpdate(function() {
-					return entity.getActionByName(this.HypermediaActions.outcomes.startUpdateAlignments);
+					return entity.getActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
 				});
 			},
 
@@ -312,10 +312,10 @@
 				this._performActionAndUpdate(function() {
 					var candidate = this.candidates.entities[index];
 					if (candidate) {
-						if (e.target.checked && candidate.getActionByName(this.HypermediaActions.outcomes.select)) {
-							return candidate.getActionByName(this.HypermediaActions.outcomes.select);
-						} else if (!e.target.checked && candidate.getActionByName(this.HypermediaActions.outcomes.deselect)) {
-							return candidate.getActionByName(this.HypermediaActions.outcomes.deselect);
+						if (e.target.checked && candidate.getActionByName(this.HypermediaActions.alignments.select)) {
+							return candidate.getActionByName(this.HypermediaActions.alignments.select);
+						} else if (!e.target.checked && candidate.getActionByName(this.HypermediaActions.alignments.deselect)) {
+							return candidate.getActionByName(this.HypermediaActions.alignments.deselect);
 						}
 					}
 				})
@@ -327,7 +327,7 @@
 			_add: function() {
 				this._buttonsDisabled = true;
 				this._performActionAndUpdate(function() {
-					return this.candidates.getActionByName(this.HypermediaActions.outcomes.submit);
+					return this.candidates.getActionByName(this.HypermediaActions.alignments.submit);
 				})
 					.then(function() {
 						window.D2L.Siren.EntityStore.fetch(this.href, this.token, true);
