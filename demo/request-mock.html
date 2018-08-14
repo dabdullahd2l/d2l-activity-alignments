@@ -72,7 +72,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					},
 					{
 						'rel': [
-							'https://api.brightspace.com/rels/__alignments'
+							'https://alignments.api.brightspace.com/rels/collection'
 						],
 						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609'
 					},
@@ -99,7 +99,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					},
 					{
 						'rel': [
-							'https://api.brightspace.com/rels/__activity-usage'
+							'https://activities.api.brightspace.com/rels/activity-usage'
 						],
 						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609'
 					}
@@ -107,7 +107,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 				'actions': [
 					{
 						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update',
-						'name': '__start-update-alignments',
+						'name': 'start-update-alignments',
 						'method': 'POST'
 					}
 				]
@@ -168,7 +168,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					actions = [
 						{
 							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0',
-							'name': '__deselect',
+							'name': 'deselect',
 							'method': 'POST',
 							'fields': [
 								{
@@ -183,7 +183,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					actions = [
 						{
 							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0',
-							'name': '__select',
+							'name': 'select',
 							'method': 'POST',
 							'fields': [
 								{
@@ -202,48 +202,48 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					'entities': [
 						{
 							'class': [
-								'__alignment-candidate'
+								'alignment-candidate'
 							],
 							'rel': [
-								'__item'
+								'item'
 							],
 							'actions': actions,
 							'links': [
 								{
 									'rel': [
-										'__intent'
+										'https://outcomes.api.brightspace.com/rels/intent'
 									],
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
 								}
 							]
 						}, {
 							'class': [
-								'__alignment-candidate'
+								'alignment-candidate'
 							],
 							'rel': [
-								'__item'
+								'item'
 							],
 							'actions': actions,
 							'links': [
 								{
 									'rel': [
-										'__intent'
+										'https://outcomes.api.brightspace.com/rels/intent'
 									],
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
 								}
 							]
 						}, {
 							'class': [
-								'__alignment-candidate'
+								'alignment-candidate'
 							],
 							'rel': [
-								'__item'
+								'item'
 							],
 							'actions': actions,
 							'links': [
 								{
 									'rel': [
-										'__intent'
+										'https://outcomes.api.brightspace.com/rels/intent'
 									],
 									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
 								}
@@ -261,7 +261,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					'actions': [
 						{
 							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=1',
-							'name': '__submit',
+							'name': 'submit',
 							'method': 'POST',
 							'fields': [
 								{
