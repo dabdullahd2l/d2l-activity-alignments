@@ -26,7 +26,7 @@
 			}
 		</style>
 		<siren-entity-loading href="[[href]]" token="[[token]]">
-			[[entity.properties.description]]
+			[[_getPrefix(entity)]][[entity.properties.description]]
 			<d2l-loading-spinner slot="loading"></d2l-loading-spinner>
 		</siren-entity-loading>
 	</template>
@@ -38,7 +38,35 @@
 
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityLoadingBehavior,
-			]
+			],
+
+			_getPrefix: function(entity) {
+				if (!entity) {
+					return;
+				}
+				var properties = entity.properties;
+				var prefix;
+				if (properties.altNotation) {
+					prefix = properties.altNotation;
+				} else if (properties.notation) {
+					prefix = properties.notation;
+				} else {
+					// Use label and/or listId as the prefix
+					prefix = [
+						properties.label,
+						properties.listId
+					]
+						.map(function(piece) {
+							return piece && piece.trim();
+						})
+						.filter(function(piece) {
+							return piece;
+						})
+						.join(' ');
+				}
+				// Add period and space
+				return prefix && prefix.replace(/\.?$/, '. ');
+			}
 		});
 	</script>
 </dom-module>
