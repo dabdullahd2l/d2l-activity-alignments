@@ -78,12 +78,14 @@
 		<siren-entity-loading href="[[href]]" token="[[token]]">
 			<div class="d2l-alignment-list-content">
 				<ul aria-busy="[[_loading]]">
-					<template is="dom-repeat" items="[[entity.entities]]">
-						<li class$="[[_getClass(index, entity.entities)]]">
+					<template is="dom-repeat" items="[[entities]]">
+						<li class$="[[_getClass(index, entities)]]">
 							<d2l-alignment
 								id$="[[id]]alignment-intent-[[index]]"
 								href="[[_getAlignment(item)]]"
 								token="[[token]]"
+								on-d2l-alignment-remove="_onAlignmentRemove"
+								data-index$="[[index]]"
 							></d2l-alignment>
 						</li>
 					</template>
@@ -107,6 +109,14 @@
 				window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior
 			],
 
+			properties: {
+				entities: Object
+			},
+
+			observers: [
+				'_setEntities(entity.entities)'
+			],
+
 			_getAlignment: function(entity) {
 				return entity && entity.href || (entity && entity.hasLinkByRel('self') && entity.getLinkByRel('self').href);
 			},
@@ -122,6 +132,14 @@
 				return className;
 			},
 
+			_setEntities: function(entities) {
+				this.entities = entities ? entities.slice() : [];
+			},
+
+			_onAlignmentRemove: function(e) {
+				var index = +Polymer.dom(e).localTarget.dataset.index;
+				this.splice('entities', index, 1);
+			},
 		});
 	</script>
 </dom-module>
