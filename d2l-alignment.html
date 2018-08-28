@@ -65,6 +65,14 @@
 			_remove: function() {
 				var action = this.entity && this.entity.getActionByName(this.HypermediaActions.alignments.removeAlignment);
 				if (action) {
+					this.dispatchEvent(new CustomEvent('d2l-alignment-remove', {
+						bubbles: true,
+						composed: true,
+						detail: {
+							entity: this.entity,
+							action: action
+						}
+					}));
 					this.performSirenAction(action)
 						.catch(function() {})
 						.then(function() {
