@@ -1,7 +1,7 @@
 {
   "name": "d2l-select-outcomes",
   "main": "d2l-select-outcomes.html",
-  "version": "0.0.8",
+  "version": "0.0.7",
   "dependencies": {
     "polymer": "1.9 - 2",
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^5.0.2",

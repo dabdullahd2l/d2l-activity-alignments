@@ -133,15 +133,6 @@
 			},
 
 			_setEntities: function(entities) {
-				if (entities && entities.length === 0) {
-					this.dispatchEvent(new CustomEvent('d2l-alignment-list-empty', {
-						bubbles: true,
-						composed: true,
-						detail: {
-							entity: this.entity
-						}
-					}));
-				}
 				this.entities = entities ? entities.slice() : [];
 			},
 

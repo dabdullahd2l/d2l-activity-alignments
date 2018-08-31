@@ -68,16 +68,7 @@
 				this.removeEventListener('d2l-siren-entity-error', this._boundHandleError);
 			},
 
-			_handleError: function(e) {
-				if (e.target === this && e.detail.error === 404) {
-					this.dispatchEvent(new CustomEvent('d2l-activity-alignments-empty', {
-						bubbles: true,
-						composed: true,
-						detail: {
-							href: this.href
-						}
-					}));
-				}
+			_handleError: function() {
 				this._showError = true;
 			},
 
