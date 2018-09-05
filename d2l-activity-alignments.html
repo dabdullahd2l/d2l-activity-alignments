@@ -30,7 +30,9 @@
 			}
 		</style>
 		<div class="main">
-			<d2l-alignment-list href="[[_getAlignments(entity)]]" token="[[token]]"></d2l-alignment-list>
+			<d2l-alignment-list href="[[_getAlignments(entity)]]" token="[[token]]">
+				<slot name="show-select-outcomes" slot="show-select-outcomes"></slot>
+			</d2l-alignment-list>
 			<template is="dom-if" if="[[_showError]]">
 				<d2l-alert type="error">[[localize('error')]]</d2l-alert>
 			</template>
