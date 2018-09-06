@@ -24,21 +24,27 @@
 			:host {
 				display: flex;
 				width: 100%;
+
+				/* The standard button box-shadow width */
+				--d2l-alignment-list-overflow-margin: 4px;
 			}
 
 			.d2l-alignment-list-content {
 				display: flex;
 				flex-direction: column;
 				flex: 1;
+				margin: var(--d2l-alignment-list-overflow-margin);
 			}
 
 			d2l-loading-spinner {
 				width: 100%;
+				margin: var(--d2l-alignment-list-overflow-margin);
 			}
 
 			siren-entity-loading {
 				overflow: hidden;
 				width: 100%;
+				margin: -var(--d2l-alignment-list-overflow-margin);
 
 				--siren-entity-loading-min-height: 10rem;
 			}
