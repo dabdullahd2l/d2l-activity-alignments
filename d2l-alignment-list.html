@@ -24,21 +24,27 @@
 			:host {
 				display: flex;
 				width: 100%;
+
+				/* The standard button box-shadow width */
+				--d2l-alignment-list-overflow-margin: 4px;
 			}
 
 			.d2l-alignment-list-content {
 				display: flex;
 				flex-direction: column;
 				flex: 1;
+				margin: var(--d2l-alignment-list-overflow-margin);
 			}
 
 			d2l-loading-spinner {
 				width: 100%;
+				margin: var(--d2l-alignment-list-overflow-margin);
 			}
 
 			siren-entity-loading {
 				overflow: hidden;
 				width: 100%;
+				margin: -var(--d2l-alignment-list-overflow-margin);
 
 				--siren-entity-loading-min-height: 10rem;
 			}
@@ -78,8 +84,11 @@
 		</style>
 		<siren-entity-loading href="[[href]]" token="[[token]]">
 			<div class="d2l-alignment-list-content">
-				<template is="dom-if" if="_hasStartUpdateAlignments(entity)">
-					<slot name="show-select-outcomes"></slot>
+				<template is="dom-if" if="[[_hasStartUpdateAlignments(entity)]]">
+					<div><slot name="show-select-outcomes"></slot></div>
+				</template>
+				<template is="dom-if" if="[[!_hasStartUpdateAlignments(entity)]]">
+					<div><slot name="describe-aligned-outcomes"></slot></div>
 				</template>
 				<ul aria-busy="[[_loading]]">
 					<template is="dom-repeat" items="[[entities]]">
@@ -147,7 +156,7 @@
 			},
 
 			_hasStartUpdateAlignments: function(entity) {
-				return entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
+				return entity && entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
 			}
 		});
 	</script>
