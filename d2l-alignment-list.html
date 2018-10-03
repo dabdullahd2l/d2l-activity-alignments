@@ -84,11 +84,20 @@
 		</style>
 		<siren-entity-loading href="[[href]]" token="[[token]]">
 			<div class="d2l-alignment-list-content">
+				<template is="dom-if" if="[[_hasAlignmentsOrEditable(entity, entities)]]">
+					<div>
+						<slot name="outcomes-title"></slot>
+					</div>
+				</template>
 				<template is="dom-if" if="[[_hasStartUpdateAlignments(entity)]]">
-					<div><slot></slot><slot name="show-select-outcomes"></slot></div>
+					<div>
+						<slot name="show-select-outcomes"></slot>
+					</div>
 				</template>
 				<template is="dom-if" if="[[_hasAlignmentsAndReadonly(entity, entities)]]">
-					<div><slot></slot><slot name="describe-aligned-outcomes"></slot></div>
+					<div class="3">
+						<slot name="describe-aligned-outcomes"></slot>
+					</div>
 				</template>
 				<ul aria-busy="[[_loading]]">
 					<template is="dom-repeat" items="[[entities]]">
@@ -160,7 +169,11 @@
 			},
 
 			_hasAlignmentsAndReadonly: function(entity, entities) {
-				return !this._hasStartUpdateAlignments(entity) && entities;
+				return !this._hasStartUpdateAlignments(entity) && entities && entities.length;
+			},
+
+			_hasAlignmentsOrEditable: function(entity, entities) {
+				return this._hasStartUpdateAlignments(entity) || (entities && entities.length);
 			}
 		});
 	</script>
