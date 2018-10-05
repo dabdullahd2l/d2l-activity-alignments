@@ -121,7 +121,7 @@
 		<siren-entity-loading href="[[_candidatesSelfHref]]" token="[[token]]">
 			<div class="d2l-alignment-update-content">
 				<ul role="listbox" aria-multiselectable="true" aria-busy="[[_loading]]">
-					<template is="dom-repeat" items="[[candidateEntities]]">
+					<template is="dom-repeat" items="[[pagedCandidateEntities]]">
 						<li
 							class$="[[_getClass(index, candidateEntities)]]"
 							role="option"
@@ -138,6 +138,7 @@
 									id$="[[id]]alignment-intent-[[index]]"
 									href="[[_getIntent(item)]]"
 									token="[[token]]"
+									on-loading-changed="_onIntentLoadingChanged"
 								></d2l-alignment-intent>
 							</d2l-input-checkbox>
 						</li>
@@ -170,6 +171,14 @@
 
 			properties: {
 				candidates: Object,
+				candidateEntities: {
+					type: Object,
+					value: []
+				},
+				pagedCandidateEntities: {
+					type: Object,
+					value: []
+				},
 				_candidatesSelfHref: {
 					type: String,
 					computed: '_getSelfLink(candidates)'
@@ -190,7 +199,8 @@
 
 			observers: [
 				'_getCandidates(entity)',
-				'_updateLoading(__promises)'
+				'_updateLoading(__promises)',
+				'_updateCandidates(candidateEntities)'
 			],
 
 			_keyCodes: {
@@ -274,6 +284,9 @@
 									if (self.__promises <= 0) {
 										self.__promises = 0;
 										self.__promise = null;
+										// The list of intents has been updated, so don't
+										// thrash the dom with intents that have already been loaded
+										self.pagedCandidateEntities = candidates.entities.slice(0, self.pagedCandidateEntities.length);
 										self.candidateEntities = candidates.entities;
 									}
 								});
@@ -294,6 +307,33 @@
 				}
 				this._performActionAndUpdate(function() {
 					return entity.getActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
+				})
+					.then(function() {
+						// There is a new list of intents. So reload everything
+						this.pagedCandidateEntities = [];
+						this._updateCandidates(this.candidateEntities || []);
+					}.bind(this));
+			},
+
+			/**
+			  * Progressively update the intents list so that no more than 10 items are loading at once
+			  */
+			_updateCandidates: function(entities) {
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					var intentsLoaded = Polymer.dom(this.root).querySelectorAll('d2l-alignment-intent:not([loading])').length;
+					var entitiesToAdd = entities.slice(
+						this.pagedCandidateEntities.length,
+						10 + intentsLoaded
+					);
+					if (entitiesToAdd.length) {
+						this.push.apply(this, [
+							'pagedCandidateEntities',
+						].concat(entitiesToAdd));
+
+						this.async(function() {
+							this._updateCandidates(entities);
+						});
+					}
 				});
 			},
 
@@ -358,6 +398,11 @@
 					this.cancelDebouncer('loading');
 					this._loading = false;
 				}
+			},
+
+			_onIntentLoadingChanged: function() {
+				// An intent was loaded, so add an unloaded intent to the list
+				this._updateCandidates(this.candidateEntities || []);
 			}
 
 		});

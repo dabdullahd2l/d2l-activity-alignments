@@ -35,6 +35,14 @@
 
 			is: 'd2l-outcome',
 
+			properties: {
+				loading: {
+					type: Boolean,
+					value: false,
+					notify: true
+				}
+			},
+
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityLoadingBehavior,
 			],

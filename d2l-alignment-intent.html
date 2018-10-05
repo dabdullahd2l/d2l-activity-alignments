@@ -16,13 +16,22 @@
 				display: block;
 			}
 		</style>
-		<d2l-outcome href="[[_getOutcome(entity)]]" token="[[token]]"></d2l-outcome>
+		<d2l-outcome href="[[_getOutcome(entity)]]" token="[[token]]" loading="{{loading}}"></d2l-outcome>
 	</template>
 
 	<script>
 		Polymer({
 
 			is: 'd2l-alignment-intent',
+
+			properties: {
+				loading: {
+					type: Boolean,
+					value: true,
+					notify: true,
+					reflectToAttribute: true
+				}
+			},
 
 			behaviors: [
 				D2L.PolymerBehaviors.Siren.EntityBehavior,
