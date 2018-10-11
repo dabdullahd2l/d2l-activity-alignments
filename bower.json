@@ -1,7 +1,22 @@
 {
-  "name": "d2l-select-outcomes",
-  "main": "d2l-select-outcomes.html",
-  "version": "0.0.15",
+  "name": "d2l-activity-alignments",
+  "homepage": "https://github.com/Brightspace/d2l-activity-alignments",
+  "license": "Apache-2.0",
+  "authors": [
+    "D2L Corporation"
+  ],
+  "main": "d2l-activity-alignments.html",
+  "ignore": [
+    ".circleci",
+    "demo",
+    "test",
+    ".editorconfig",
+    ".eslintrc.json",
+    ".gitignore",
+    "package.json",
+    "polymer.json",
+    "wct.conf.json"
+  ],
   "dependencies": {
     "polymer": "1.9 - 2",
     "d2l-fetch-siren-entity-behavior": "Brightspace/d2l-fetch-siren-entity-behavior#^5.0.2",
