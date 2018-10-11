@@ -6,6 +6,7 @@
 <link rel="import" href="../d2l-button/d2l-button.html">
 <link rel="import" href="../d2l-button/d2l-button-icon.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="../d2l-inputs/d2l-input-checkbox.html">
 <link rel="import" href="../d2l-alert/d2l-alert.html">
 <link rel="import" href="../d2l-loading-spinner/d2l-loading-spinner.html">
 <link rel="import" href="../d2l-polymer-siren-behaviors/siren-entity-loading.html">
@@ -67,7 +68,7 @@
 				padding: 0.75rem 1.25rem;
 			}
 
-			d2l-checkbox {
+			d2l-input-checkbox {
 				margin: 0;
 			}
 
@@ -128,7 +129,7 @@
 							role="option"
 							aria-checked$="[[_getChecked(item)]]"
 						>
-							<d2l-checkbox
+							<d2l-input-checkbox
 								checked="[[_getChecked(item)]]"
 								on-change="_onOutcomeSelectChange"
 								on-keydown="_onKeyDown"
@@ -140,7 +141,7 @@
 									href="[[_getIntent(item)]]"
 									token="[[token]]"
 								></d2l-alignment-intent>
-							</d2l-checkbox>
+							</d2l-input-checkbox>
 						</li>
 					</template>
 				</ul>
