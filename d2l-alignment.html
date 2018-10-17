@@ -5,11 +5,11 @@
 <link rel="import" href="../d2l-polymer-siren-behaviors/store/entity-behavior.html">
 <link rel="import" href="../d2l-polymer-siren-behaviors/store/siren-action-behavior.html">
 <link rel="import" href="../d2l-hm-constants-behavior/d2l-hm-constants-behavior.html">
+<link rel="import" href="../d2l-outcomes-level-of-achievements-ui/d2l-outcomes-level-of-achievements.html">
 <link rel="import" href="./d2l-alignment-intent.html">
 <link rel="import" href="./localize-behavior.html">
 <!--
 `d2l-select-outcomes`
-
 
 @demo demo/index.html
 -->
@@ -17,7 +17,7 @@
 <dom-module id="d2l-alignment">
 	<template>
 		<style>
-			:host {
+			:host > div {
 				display: flex;
 			}
 
@@ -37,10 +37,23 @@
 				margin-right: 0;
 				margin-left: 2px;
 			}
+
+			d2l-outcomes-level-of-achievements {
+				display: block;
+			}
 		</style>
-		<d2l-alignment-intent href="[[_getIntent(entity)]]" token="[[token]]"></d2l-alignment-intent>
-		<template is="dom-if" if="[[_hasRemoveAlignment(entity)]]">
-			<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('removeAlignment')]]" on-click="_remove"></d2l-button-icon>
+
+		<div>
+			<d2l-alignment-intent href="[[_getIntent(entity)]]" token="[[token]]"></d2l-alignment-intent>
+			<template is="dom-if" if="[[_hasRemoveAlignment(entity)]]">
+				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('removeAlignment')]]" on-click="_remove"></d2l-button-icon>
+			</template>
+		</div>
+		<template is="dom-if" if="[[_hasDemonstrations(entity)]]">
+			<d2l-outcomes-level-of-achievements
+				token="[[token]]"
+				href="[[_getDemonstrations(entity)]]">
+			</d2l-outcomes-level-of-achievements>
 		</template>
 	</template>
 
@@ -58,6 +71,16 @@
 
 			_getIntent: function(entity) {
 				return entity && entity.hasLinkByRel(this.HypermediaRels.Outcomes.intent) && entity.getLinkByRel(this.HypermediaRels.Outcomes.intent).href;
+			},
+
+			_hasDemonstrations: function(entity) {
+				// TODO: Add to hmConstants when this gets finalized
+				return entity && entity.hasLinkByRel('https://api.brightspace.com/rels/__todo_demonstration');
+			},
+
+			_getDemonstrations: function(entity) {
+				// TODO: Add to hmConstants when this gets finalized
+				return this._hasDemonstrations(entity) && entity.getLinkByRel('https://api.brightspace.com/rels/__todo_demonstration').href;
 			},
 
 			_hasRemoveAlignment: function(entity) {
