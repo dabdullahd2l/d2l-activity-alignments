@@ -75,12 +75,12 @@
 
 			_hasDemonstrations: function(entity) {
 				// TODO: Add to hmConstants when this gets finalized
-				return entity && entity.hasLinkByRel('https://demonstrations.api.brightspace.com/rels/demonstration');
+				return entity && entity.hasLinkByRel('https://achievements.api.brightspace.com/rels/demonstration');
 			},
 
 			_getDemonstrations: function(entity) {
 				// TODO: Add to hmConstants when this gets finalized
-				return this._hasDemonstrations(entity) && entity.getLinkByRel('https://demonstrations.api.brightspace.com/rels/demonstration').href;
+				return this._hasDemonstrations(entity) && entity.getLinkByRel('https://achievements.api.brightspace.com/rels/demonstration').href;
 			},
 
 			_hasRemoveAlignment: function(entity) {
