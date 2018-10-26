@@ -134,6 +134,28 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 				]
 			}));
 
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/edcdd008-20f2-4934-9017-e53650505eae':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				'class': [
+					'intent'
+				],
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/edcdd008-20f2-4934-9017-e53650505eae'
+					},
+					{
+						'rel': [
+							'https://outcomes.api.brightspace.com/rels/outcome'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/edcdd008-20f2-4934-9017-e53650505eae'
+					}
+				]
+			}));
+
+
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a':
 			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
 				'class': [
@@ -159,6 +181,35 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 					}
 				]
 			}));
+
+		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/edcdd008-20f2-4934-9017-e53650505eae':
+			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+				'class': [
+					'outcome'
+				],
+				'properties': {
+					'altNotation': '',
+					'notation': '',
+					'description': 'explore the algebraic development of the quadratic formula (e.g., given the algebraic development, connect the steps to a numeric example; follow a demonstration of the algebraic development, with technology, such as computer algebra systems, or without technology [student reproduction of the development of the general case is not required]), and apply the formula to solve quadratic equations, using technology',
+					'label': 'Specific Expecation',
+					'listId': '1.6'
+				},
+				'links': [
+					{
+						'rel': [
+							'self'
+						],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/edcdd008-20f2-4934-9017-e53650505eae'
+					},
+					{
+						'rel': [
+							'about'
+						],
+						'href': 'http://asn.desire2learn.com/resources/S2686684'
+					}
+				]
+			}));
+
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update':
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609/update?submit=0':
 			return request.formData().then(function(body) {
@@ -229,7 +280,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 									'rel': [
 										'https://outcomes.api.brightspace.com/rels/intent'
 									],
-									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a'
+									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/edcdd008-20f2-4934-9017-e53650505eae'
 								}
 							]
 						}, {
