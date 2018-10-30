@@ -102,6 +102,7 @@
 								token="[[token]]"
 								on-d2l-alignment-remove="_onAlignmentRemove"
 								data-index$="[[index]]"
+								read-only="[[readOnly]]"
 							></d2l-alignment>
 						</li>
 					</template>
@@ -127,7 +128,8 @@
 			],
 
 			properties: {
-				entities: Object
+				entities: Object,
+				readOnly: Boolean,
 			},
 
 			observers: [
@@ -159,7 +161,7 @@
 			},
 
 			_hasStartUpdateAlignments: function(entity) {
-				return entity && entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
+				return !this.readOnly && entity && entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
 			},
 
 			_hasAlignmentsAndReadonly: function(entity, entities) {

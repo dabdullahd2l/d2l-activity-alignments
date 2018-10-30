@@ -45,15 +45,16 @@
 
 		<div>
 			<d2l-alignment-intent href="[[_getIntent(entity)]]" token="[[token]]"></d2l-alignment-intent>
-			<template is="dom-if" if="[[_hasRemoveAlignment(entity)]]">
+			<template is="dom-if" if="[[!readOnly && _hasRemoveAlignment(entity)]]">
 				<d2l-button-icon icon="d2l-tier1:close-default" text="[[localize('removeAlignment')]]" on-click="_remove"></d2l-button-icon>
 			</template>
 		</div>
 		<template is="dom-if" if="[[_hasDemonstrations(entity)]]">
 			<d2l-outcomes-level-of-achievements
 				token="[[token]]"
-				href="[[_getDemonstrations(entity)]]">
-			</d2l-outcomes-level-of-achievements>
+				href="[[_getDemonstrations(entity)]]"
+				read-only="[[readOnly]]"
+			></d2l-outcomes-level-of-achievements>
 		</template>
 	</template>
 
