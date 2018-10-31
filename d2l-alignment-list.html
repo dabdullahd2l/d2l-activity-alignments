@@ -78,17 +78,17 @@
 		</style>
 		<siren-entity-loading href="[[href]]" token="[[token]]">
 			<div class="d2l-alignment-list-content">
-				<template is="dom-if" if="[[_hasAlignmentsOrEditable(entity, entities)]]">
+				<template is="dom-if" if="[[_hasAlignmentsOrEditable(entity, entities, readOnly)]]">
 					<div>
 						<slot name="outcomes-title"></slot>
 					</div>
 				</template>
-				<template is="dom-if" if="[[_hasStartUpdateAlignments(entity)]]">
+				<template is="dom-if" if="[[_isEditable(entity, readOnly)]]">
 					<div>
 						<slot name="show-select-outcomes"></slot>
 					</div>
 				</template>
-				<template is="dom-if" if="[[_hasAlignmentsAndReadonly(entity, entities)]]">
+				<template is="dom-if" if="[[_hasAlignmentsAndNotEditable(entity, entities, readOnly)]]">
 					<div>
 						<slot name="describe-aligned-outcomes"></slot>
 					</div>
@@ -102,6 +102,7 @@
 								token="[[token]]"
 								on-d2l-alignment-remove="_onAlignmentRemove"
 								data-index$="[[index]]"
+								read-only$="[[readOnly]]"
 							></d2l-alignment>
 						</li>
 					</template>
@@ -127,7 +128,8 @@
 			],
 
 			properties: {
-				entities: Object
+				entities: Object,
+				readOnly: Boolean,
 			},
 
 			observers: [
@@ -158,16 +160,56 @@
 				this.splice('entities', index, 1);
 			},
 
-			_hasStartUpdateAlignments: function(entity) {
-				return entity && entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
+			_isEditable: function(entity, readOnly) {
+				if (readOnly) {
+					return false;
+				}
+
+				if (!entity) {
+					return false;
+				}
+
+				if (!entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments)) {
+					return false;
+				}
+
+				return true;
 			},
 
-			_hasAlignmentsAndReadonly: function(entity, entities) {
-				return !this._hasStartUpdateAlignments(entity) && entities && entities.length;
+			_hasAlignments: function(entities) {
+				if (!entities) {
+					return false;
+				}
+
+				if (!entities.length) {
+					return false;
+				}
+
+				return true;
 			},
 
-			_hasAlignmentsOrEditable: function(entity, entities) {
-				return this._hasStartUpdateAlignments(entity) || (entities && entities.length);
+			_hasAlignmentsAndNotEditable: function(entity, entities, readOnly) {
+				if (!this._hasAlignments(entities)) {
+					return false;
+				}
+
+				if (this._isEditable(entity, readOnly)) {
+					return false;
+				}
+
+				return true;
+			},
+
+			_hasAlignmentsOrEditable: function(entity, entities, readOnly) {
+				if (this._hasAlignments(entities)) {
+					return true;
+				}
+
+				if (this._isEditable(entity, readOnly)) {
+					return true;
+				}
+
+				return false;
 			}
 		});
 	</script>
