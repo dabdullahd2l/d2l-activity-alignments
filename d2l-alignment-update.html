@@ -311,9 +311,9 @@
 				this._performActionAndUpdate(function() {
 					var candidate = this.candidates.entities[index];
 					if (candidate) {
-						if (e.target.checked && candidate.getActionByName(this.HypermediaActions.alignments.select)) {
+						if (target.checked && candidate.getActionByName(this.HypermediaActions.alignments.select)) {
 							return candidate.getActionByName(this.HypermediaActions.alignments.select);
-						} else if (!e.target.checked && candidate.getActionByName(this.HypermediaActions.alignments.deselect)) {
+						} else if (!target.checked && candidate.getActionByName(this.HypermediaActions.alignments.deselect)) {
 							return candidate.getActionByName(this.HypermediaActions.alignments.deselect);
 						}
 					}
