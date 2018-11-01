@@ -21,6 +21,7 @@
 			:host {
 				display: flex;
 				width: 100%;
+				max-width: 922px;
 
 				/* The standard button box-shadow width */
 				--d2l-alignment-list-overflow-margin: 4px;
@@ -54,22 +55,29 @@
 				padding: 0;
 				overflow: auto;
 				margin: 0;
-			}
-
-			li.d2l-select-outcomes-first {
-				margin-top: 1rem;
+				margin-top: 18px;
 			}
 
 			li {
 				position: relative;
 				list-style-type: none;
-				border: 1px solid transparent;
 				color: var(--d2l-color-ferrite);
-				border-bottom-color: transparent;
+
+				margin-bottom: 18px;
 			}
 
-			li.d2l-select-outcomes-last {
-				border-bottom-color: var(--d2l-color-gypsum);
+			li:last-of-type {
+				margin-bottom: 0;
+			}
+
+			.d2l-alignment-list-editable li {
+				padding: 12px;
+				border-top: 1px solid var(--d2l-color-gypsum);
+				margin-bottom: 0;
+			}
+
+			.d2l-alignment-list-editable li:last-of-type {
+				border-bottom: 1px solid var(--d2l-color-gypsum);
 			}
 
 			d2l-alert {
@@ -93,9 +101,9 @@
 						<slot name="describe-aligned-outcomes"></slot>
 					</div>
 				</template>
-				<ul aria-busy="[[_loading]]">
+				<ul aria-busy="[[_loading]]" class$="[[_getClass(entity, readOnly)]]">
 					<template is="dom-repeat" items="[[entities]]">
-						<li class$="[[_getClass(index, entities)]]">
+						<li>
 							<d2l-alignment
 								id$="[[id]]alignment-intent-[[index]]"
 								href="[[_getAlignment(item)]]"
@@ -129,7 +137,10 @@
 
 			properties: {
 				entities: Object,
-				readOnly: Boolean,
+				readOnly: {
+					type: Boolean,
+					value: false
+				}
 			},
 
 			observers: [
@@ -140,15 +151,12 @@
 				return entity && entity.href || (entity && entity.hasLinkByRel('self') && entity.getLinkByRel('self').href);
 			},
 
-			_getClass: function(index, candidates) {
-				var className = '';
-				if (index === 0) {
-					className += 'd2l-select-outcomes-first';
+			_getClass: function(entity, readOnly) {
+				if (this._isEditable(entity, readOnly)) {
+					return 'd2l-alignment-list-editable';
 				}
-				if (index === candidates.length - 1) {
-					className += ' d2l-select-outcomes-last';
-				}
-				return className;
+
+				return '';
 			},
 
 			_setEntities: function(entities) {
