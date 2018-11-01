@@ -73,15 +73,15 @@
 
 				var properties = entity.properties;
 
-				if (properties.altNotation) {
-					return properties.altNotation;
-				}
-
-				if (properties.notation) {
-					return properties.notation;
+				var subject;
+				if (properties.subjects) {
+					if (properties.subjects.length > 0) {
+						subject = properties.subjects[0];
+					}
 				}
 
 				return [
+					subject,
 					properties.label,
 					properties.listId
 				]
