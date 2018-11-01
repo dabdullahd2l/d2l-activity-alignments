@@ -72,8 +72,14 @@
 
 			.d2l-alignment-list-editable li {
 				padding: 12px;
+				padding-right: 0;
 				border-top: 1px solid var(--d2l-color-gypsum);
 				margin-bottom: 0;
+			}
+
+			:host-context([dir="rtl"]) .d2l-alignment-list-editable li {
+				padding-right 12px;
+				padding-left: 0;
 			}
 
 			.d2l-alignment-list-editable li:last-of-type {
