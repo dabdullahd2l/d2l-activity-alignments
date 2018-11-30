@@ -30,7 +30,7 @@
     "d2l-loading-spinner": "^6.0.3",
     "d2l-alert": "^3.1.0",
     "d2l-typography": "^6.1.3",
-    "d2l-outcomes-level-of-achievements": "Brightspace/outcomes-level-of-achievement-ui#^1.0.12",
+    "d2l-outcomes-level-of-achievements": "Brightspace/outcomes-level-of-achievement-ui#^1.0.13",
     "s-html": "Brightspace/s-html#^1.2.0"
   },
   "devDependencies": {
