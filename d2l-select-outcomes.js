@@ -1,7 +1,6 @@
 /**
 `d2l-select-outcomes`
 
-
 @demo demo/index.html
 */
 /*
@@ -12,10 +11,11 @@
 import '@polymer/polymer/polymer-legacy.js';
 
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
-import 'd2l-hypermedia-constants/d2l-hm-constants-behavior.js';
+import { Rels } from 'd2l-hypermedia-constants';
 import 'd2l-alert/d2l-alert.js';
 import './d2l-alignment-update.js';
 import './localize-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-select-outcomes">
@@ -40,7 +40,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-select-outcomes">
 		</div>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -58,7 +58,6 @@ Polymer({
 	behaviors: [
 		D2L.PolymerBehaviors.Siren.EntityBehavior,
 		window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior,
-		window.D2L.Hypermedia.HMConstantsBehavior
 	],
 
 	ready: function() {
@@ -79,7 +78,7 @@ Polymer({
 	},
 
 	_getAlignments: function(entity) {
-		return entity && entity.hasLinkByRel(this.HypermediaRels.Alignments.alignments) && entity.getLinkByRel(this.HypermediaRels.Alignments.alignments).href;
+		return entity && entity.hasLinkByRel(Rels.Alignments.alignments) && entity.getLinkByRel(Rels.Alignments.alignments).href;
 	}
 
 });

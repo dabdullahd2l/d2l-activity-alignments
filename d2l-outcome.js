@@ -1,7 +1,6 @@
 /**
 `d2l-select-outcomes`
 
-
 @demo demo/index.html
 */
 /*
@@ -15,6 +14,7 @@ import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import 'd2l-polymer-siren-behaviors/siren-entity-loading.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 's-html/s-html.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-outcome">
@@ -47,7 +47,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-outcome">
 			d2l-loading-spinner {
 				--d2l-loading-spinner-size: 1.2rem;
 			}
-			
+
 			.d2l-outcome-wrap, .d2l-outcome-text {
 				width: 100%;
 			}
@@ -67,7 +67,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-outcome">
 		</siren-entity-loading>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

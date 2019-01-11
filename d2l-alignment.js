@@ -15,10 +15,11 @@ import 'd2l-icons/tier1-icons.js';
 import 'd2l-polymer-siren-behaviors/store/entity-store.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import 'd2l-hypermedia-constants/d2l-hm-constants-behavior.js';
+import { Actions, Rels } from 'd2l-hypermedia-constants';
 import 'd2l-outcomes-level-of-achievements/d2l-outcomes-level-of-achievements.js';
 import './d2l-alignment-intent.js';
 import './localize-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-alignment">
@@ -58,7 +59,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-alignment">
 		</template>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -74,11 +75,10 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior,
-		window.D2L.Hypermedia.HMConstantsBehavior
 	],
 
 	_getIntent: function(entity) {
-		return entity && entity.hasLinkByRel(this.HypermediaRels.Outcomes.intent) && entity.getLinkByRel(this.HypermediaRels.Outcomes.intent).href;
+		return entity && entity.hasLinkByRel(Rels.Outcomes.intent) && entity.getLinkByRel(Rels.Outcomes.intent).href;
 	},
 
 	_hasDemonstrations: function(entity) {
@@ -100,7 +100,7 @@ Polymer({
 			return false;
 		}
 
-		if (!entity.hasActionByName(this.HypermediaActions.alignments.removeAlignment)) {
+		if (!entity.hasActionByName(Actions.alignments.removeAlignment)) {
 			return false;
 		}
 
@@ -108,7 +108,7 @@ Polymer({
 	},
 
 	_remove: function() {
-		var action = this.entity && this.entity.getActionByName(this.HypermediaActions.alignments.removeAlignment);
+		var action = this.entity && this.entity.getActionByName(Actions.alignments.removeAlignment);
 		if (action) {
 			this.dispatchEvent(new CustomEvent('d2l-alignment-remove', {
 				bubbles: true,

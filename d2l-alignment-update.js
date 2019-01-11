@@ -1,7 +1,6 @@
 /**
 `d2l-select-outcomes`
 
-
 @demo demo/index.html
 */
 /*
@@ -13,7 +12,7 @@ import '@polymer/polymer/polymer-legacy.js';
 
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import 'd2l-hypermedia-constants/d2l-hm-constants-behavior.js';
+import { Actions, Classes, Rels } from 'd2l-hypermedia-constants';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-button/d2l-button.js';
 import 'd2l-inputs/d2l-input-checkbox.js';
@@ -22,6 +21,7 @@ import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import 'd2l-polymer-siren-behaviors/siren-entity-loading.js';
 import './d2l-alignment-intent.js';
 import './localize-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-update">
@@ -148,7 +148,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-update">
 		</siren-entity-loading>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -160,7 +160,6 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior,
-		window.D2L.Hypermedia.HMConstantsBehavior
 	],
 
 	properties: {
@@ -199,7 +198,7 @@ Polymer({
 	},
 
 	_onKeyDown: function(e) {
-		var target = Polymer.dom(e).localTarget;
+		var target = e.target;
 		if (e.keyCode === this._keyCodes.DOWN || e.keyCode === this._keyCodes.UP) {
 			// prevent scrolling when up/down arrows pressed
 			e.preventDefault();
@@ -288,29 +287,29 @@ Polymer({
 			return;
 		}
 		this._performActionAndUpdate(function() {
-			return entity.getActionByName(this.HypermediaActions.alignments.startUpdateAlignments);
+			return entity.getActionByName(Actions.alignments.startUpdateAlignments);
 		});
 	},
 
 	_getChecked: function(candidate) {
-		return candidate.hasClass(this.HypermediaClasses.alignments.selected);
+		return candidate.hasClass(Classes.alignments.selected);
 	},
 
 	_getIntent: function(entity) {
-		return entity && entity.hasLinkByRel(this.HypermediaRels.Outcomes.intent) && entity.getLinkByRel(this.HypermediaRels.Outcomes.intent).href;
+		return entity && entity.hasLinkByRel(Rels.Outcomes.intent) && entity.getLinkByRel(Rels.Outcomes.intent).href;
 	},
 
 	_onOutcomeSelectChange: function(e) {
 		var self = this;
-		var target = Polymer.dom(e).localTarget;
+		var target = e.target;
 		var index = +target.dataset.index;
-		this._performActionAndUpdate(function() {
+		this._performActionAndUpdate(/* @this */ function() {
 			var candidate = this.candidates.entities[index];
 			if (candidate) {
-				if (target.checked && candidate.getActionByName(this.HypermediaActions.alignments.select)) {
-					return candidate.getActionByName(this.HypermediaActions.alignments.select);
-				} else if (!target.checked && candidate.getActionByName(this.HypermediaActions.alignments.deselect)) {
-					return candidate.getActionByName(this.HypermediaActions.alignments.deselect);
+				if (target.checked && candidate.getActionByName(Actions.alignments.select)) {
+					return candidate.getActionByName(Actions.alignments.select);
+				} else if (!target.checked && candidate.getActionByName(Actions.alignments.deselect)) {
+					return candidate.getActionByName(Actions.alignments.deselect);
 				}
 			}
 		})
@@ -321,8 +320,8 @@ Polymer({
 
 	_add: function() {
 		this._buttonsDisabled = true;
-		this._performActionAndUpdate(function() {
-			return this.candidates.getActionByName(this.HypermediaActions.alignments.submit);
+		this._performActionAndUpdate(/* @this */ function() {
+			return this.candidates.getActionByName(Actions.alignments.submit);
 		})
 			.then(function() {
 				window.D2L.Siren.EntityStore.fetch(this.href, this.token, true);
@@ -346,7 +345,7 @@ Polymer({
 
 	_updateLoading: function(promises) {
 		if (promises > 0) {
-			this.debounce('loading', function() {
+			this.debounce('loading', /* @this */ function() {
 				this._loading = this.__promises > 0;
 			}, 1000);
 		} else {

@@ -21,6 +21,7 @@
 
 	<script type="module">
 import '../d2l-outcome.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 /* global suite, test, assert, fixture, setup, stubWhitelist */
 var runTest = function(testName, href, testFunction) {
 	var element;
@@ -50,7 +51,7 @@ var runTest = function(testName, href, testFunction) {
 		element.token = '';
 	});
 
-	test(testName, function(){
+	test(testName, function() {
 		testFunction(element);
 	});
 };
@@ -66,7 +67,7 @@ suite('d2l-outcome', function() {
 			'renders outcome',
 			'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json',
 			function(element) {
-				var content = Polymer.dom(element.$$('siren-entity-loading')).textContent.trim();
+				var content = dom(element.$$('siren-entity-loading')).textContent.trim();
 				assert.equal(content, 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.');
 			}
 		);
@@ -82,7 +83,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('asn multiple lists', function() {
 		runTest(
 			'flattens multiple lists in ASN outcomes',
@@ -93,7 +94,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('asn malformed list', function() {
 		runTest(
 			'flattens lists in ASN outcomes that are missing closing tags',
@@ -104,7 +105,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('outcome with notation and label', function() {
 		runTest(
 			'shows the outcome notation, primary subject, label, and listId',
@@ -115,7 +116,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('outcome with altNotation but no notation', function() {
 		runTest(
 			'use altNotation if notation is null, empty, or only whitespace',
@@ -126,7 +127,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('outcome with notation only', function() {
 		runTest(
 			'correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId',
@@ -137,7 +138,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 	suite('outcome without notation', function() {
 		runTest(
 			'correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation',
@@ -148,7 +149,7 @@ suite('d2l-outcome', function() {
 			}
 		);
 	});
-	
+
 });
 </script>
   </body>

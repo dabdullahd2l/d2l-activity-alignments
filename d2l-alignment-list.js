@@ -1,7 +1,6 @@
 /**
 `d2l-select-outcomes`
 
-
 @demo demo/index.html
 */
 /*
@@ -13,7 +12,7 @@ import '@polymer/polymer/polymer-legacy.js';
 
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
-import 'd2l-hypermedia-constants/d2l-hm-constants-behavior.js';
+import { Actions } from 'd2l-hypermedia-constants';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
@@ -21,6 +20,7 @@ import 'd2l-polymer-siren-behaviors/siren-entity-loading.js';
 import 'd2l-offscreen/d2l-offscreen.js';
 import './d2l-alignment.js';
 import './localize-behavior.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-list">
@@ -130,7 +130,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-list">
 		</siren-entity-loading>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -142,7 +142,6 @@ Polymer({
 		D2L.PolymerBehaviors.Siren.EntityBehavior,
 		D2L.PolymerBehaviors.Siren.SirenActionBehavior,
 		window.D2L.PolymerBehaviors.SelectOutcomes.LocalizeBehavior,
-		window.D2L.Hypermedia.HMConstantsBehavior
 	],
 
 	properties: {
@@ -174,7 +173,7 @@ Polymer({
 	},
 
 	_onAlignmentRemove: function(e) {
-		var index = +Polymer.dom(e).localTarget.dataset.index;
+		var index = +e.target.dataset.index;
 		this.splice('entities', index, 1);
 
 		// Notify screen readers that an alignment has been removed
@@ -196,7 +195,7 @@ Polymer({
 			return false;
 		}
 
-		if (!entity.hasActionByName(this.HypermediaActions.alignments.startUpdateAlignments)) {
+		if (!entity.hasActionByName(Actions.alignments.startUpdateAlignments)) {
 			return false;
 		}
 
