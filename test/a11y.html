@@ -7,10 +7,10 @@
 
 	<title>d2l-select-outcomes test</title>
 
-	<script src='../../webcomponentsjs/webcomponents-lite.js'></script>
-	<script src='../../web-component-tester/browser.js'></script>
+	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../wct-browser-legacy/browser.js"></script>
 
-	<link rel='import' href='../d2l-select-outcomes.html'>
+	<script type="module" src="../d2l-select-outcomes.js"></script>
 </head>
 
 <body>
@@ -20,215 +20,216 @@
 		</template>
 	</test-fixture>
 
-	<script>
-		/* global suite, setup, test, fixture, sinon, axs, assert */
-		suite('d2l-select-outcomes', function() {
-			suite('a11y', function() {
-				setup(function(done) {
-					function stubFetch(href, entity) {
-						window.d2lfetch.fetch
-							.withArgs(href)
-							.returns(Promise.resolve({
-								ok: true,
-								json: function() {
-									return Promise.resolve(entity);
-								}
-							}));
-					}
-					var fixtureElement = fixture('a11y');
-					sinon.stub(window.d2lfetch, 'fetch');
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609', {
-							'class': ['activity', 'discussion-activity'],
-							'entities': [{
-								'class': ['date', 'start-date'],
-								'rel': ['https://api.brightspace.com/rels/date'],
-								'properties': {
-									'date': '2011-01-01T15:00:00.000Z'
-								}
-							}],
-							'links': [{
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
-							}, {
-								'rel': ['https://activities.api.brightspace.com/rels/my-activity-usage'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609/users/169'
-							}, {
-								'rel': ['https://discussions.api.brightspace.com/rels/topic'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.discussions.api.dev.brightspace.com/6609/forums/1/topics/1'
-							}, {
-								'rel': ['https://api.brightspace.com/rels/organization'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.dev.brightspace.com/6609'
-							}, {
-								'rel': ['https://alignments.api.brightspace.com/rels/alignments'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
-							}]
+	<script type="module">
+import '../d2l-select-outcomes.js';
+/* global suite, setup, test, fixture, sinon, axs, assert */
+suite('d2l-select-outcomes', function() {
+	suite('a11y', function() {
+		setup(function(done) {
+			function stubFetch(href, entity) {
+				window.d2lfetch.fetch
+					.withArgs(href)
+					.returns(Promise.resolve({
+						ok: true,
+						json: function() {
+							return Promise.resolve(entity);
 						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609', {
-							'class': ['collection', 'alignments'],
-							'links': [{
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
-							}, {
-								'rel': ['https://activities.api.brightspace.com/rels/activity-usage'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
-							}],
-							'actions': [{
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update',
-								'name': 'start-update-alignments',
-								'method': 'POST'
-							}]
+					}));
+			}
+			var fixtureElement = fixture('a11y');
+			sinon.stub(window.d2lfetch, 'fetch');
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609', {
+					'class': ['activity', 'discussion-activity'],
+					'entities': [{
+						'class': ['date', 'start-date'],
+						'rel': ['https://api.brightspace.com/rels/date'],
+						'properties': {
+							'date': '2011-01-01T15:00:00.000Z'
 						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update', {
-							'class': ['collection'],
-							'actions': [{
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=1',
-								'name': '__submit',
-								'method': 'POST',
-								'fields': [{
-									'type': 'text',
-									'name': 'state',
-									'value': ''
-								}]
-							}],
-							'entities': [{
-								'class': ['alignment-candidate'],
-								'rel': ['item'],
-								'actions': [{
-									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
-									'name': 'select',
-									'method': 'POST',
-									'fields': [{
-										'type': 'hidden',
-										'name': 'state',
-										'value': ''
-									}]
-								}],
-								'links': [{
-									'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
-									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
-								}]
-							}, {
-								'class': ['alignment-candidate'],
-								'rel': ['item'],
-								'actions': [{
-									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
-									'name': 'select',
-									'method': 'POST',
-									'fields': [{
-										'type': 'hidden',
-										'name': 'state',
-										'value': ''
-									}]
-								}],
-								'links': [{
-									'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
-									'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
-								}]
-							}],
-							'links': [{
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0'
+					}],
+					'links': [{
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
+					}, {
+						'rel': ['https://activities.api.brightspace.com/rels/my-activity-usage'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609/users/169'
+					}, {
+						'rel': ['https://discussions.api.brightspace.com/rels/topic'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.discussions.api.dev.brightspace.com/6609/forums/1/topics/1'
+					}, {
+						'rel': ['https://api.brightspace.com/rels/organization'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.organizations.api.dev.brightspace.com/6609'
+					}, {
+						'rel': ['https://alignments.api.brightspace.com/rels/alignments'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609', {
+					'class': ['collection', 'alignments'],
+					'links': [{
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609'
+					}, {
+						'rel': ['https://activities.api.brightspace.com/rels/activity-usage'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609'
+					}],
+					'actions': [{
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update',
+						'name': 'start-update-alignments',
+						'method': 'POST'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update', {
+					'class': ['collection'],
+					'actions': [{
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=1',
+						'name': '__submit',
+						'method': 'POST',
+						'fields': [{
+							'type': 'text',
+							'name': 'state',
+							'value': ''
+						}]
+					}],
+					'entities': [{
+						'class': ['alignment-candidate'],
+						'rel': ['item'],
+						'actions': [{
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
+							'name': 'select',
+							'method': 'POST',
+							'fields': [{
+								'type': 'hidden',
+								'name': 'state',
+								'value': ''
 							}]
-						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
-							'class': ['intent'],
-							'links': [{
-								'rel': ['collection'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
-							}, {
-								'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
-							}, {
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+						}],
+						'links': [{
+							'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+						}]
+					}, {
+						'class': ['alignment-candidate'],
+						'rel': ['item'],
+						'actions': [{
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0',
+							'name': 'select',
+							'method': 'POST',
+							'fields': [{
+								'type': 'hidden',
+								'name': 'state',
+								'value': ''
 							}]
-						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
-							'class': ['intent'],
-							'links': [{
-								'rel': ['collection'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
-							}, {
-								'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
-							}, {
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
-							}]
-						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
-							'class': ['outcome'],
-							'properties': {
-								'notation': '',
-								'description': 'compare a manual accounting system with a computerized accounting system'
-							},
-							'links': [{
-								'rel': ['about'],
-								'type': 'text/html',
-								'href': 'http://asn.desire2learn.com/resources/S2698474'
-							}, {
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
-							}]
-						}
-					);
-					stubFetch(
-						'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
-							'class': ['outcome'],
-							'properties': {
-								'notation': '',
-								'description': 'compare a manual accounting system with a computerized accounting system'
-							},
-							'links': [{
-								'rel': ['about'],
-								'type': 'text/html',
-								'href': 'http://asn.desire2learn.com/resources/S2698474'
-							}, {
-								'rel': ['self'],
-								'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
-							}]
-						}
-					);
-					function waitForFetch() {
-						window.D2L.Siren.EntityStore.removeListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
-						Polymer.dom.flush();
-						// Wait for animations to complete
-						setTimeout(done, 500);
-					}
-					window.D2L.Siren.EntityStore.addListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
-					fixtureElement.href = 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609';
-					fixtureElement.token = '';
-				});
+						}],
+						'links': [{
+							'rel': ['https://outcomes.api.brightspace.com/rels/intent'],
+							'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+						}]
+					}],
+					'links': [{
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.dev.brightspace.com/activity-usage/6606_3000_1/6609/update?submit=0'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
+					'class': ['intent'],
+					'links': [{
+						'rel': ['collection'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
+					}, {
+						'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+					}, {
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
+					'class': ['intent'],
+					'links': [{
+						'rel': ['collection'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4'
+					}, {
+						'rel': ['https://outcomes.api.brightspace.com/rels/outcome'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+					}, {
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/intents/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', {
+					'class': ['outcome'],
+					'properties': {
+						'notation': '',
+						'description': 'compare a manual accounting system with a computerized accounting system'
+					},
+					'links': [{
+						'rel': ['about'],
+						'type': 'text/html',
+						'href': 'http://asn.desire2learn.com/resources/S2698474'
+					}, {
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34'
+					}]
+				}
+			);
+			stubFetch(
+				'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35', {
+					'class': ['outcome'],
+					'properties': {
+						'notation': '',
+						'description': 'compare a manual accounting system with a computerized accounting system'
+					},
+					'links': [{
+						'rel': ['about'],
+						'type': 'text/html',
+						'href': 'http://asn.desire2learn.com/resources/S2698474'
+					}, {
+						'rel': ['self'],
+						'href': 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc35'
+					}]
+				}
+			);
+			function waitForFetch() {
+				window.D2L.Siren.EntityStore.removeListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
+				Polymer.dom.flush();
+				// Wait for animations to complete
+				setTimeout(done, 500);
+			}
+			window.D2L.Siren.EntityStore.addListener('https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.dev.brightspace.com/outcomes/73292f97-ebe5-43d5-b1df-299d98f1e0c4/84f0b418-2f25-4184-87e5-9ab7f86fbc34', '', waitForFetch);
+			fixtureElement.href = 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.dev.brightspace.com/activities/6606_3000_1/usages/6609';
+			fixtureElement.token = '';
+		});
 
-				test('A11y Audit - Fixture: d2l-select-outcomes', function() {
-					var axsConfig = new axs.AuditConfiguration();
-					axsConfig.scope = document.body;
-					axsConfig.showUnsupportedRulesWarning = false;
-					var auditResults = axs.Audit.run(axsConfig);
-					auditResults.forEach(function(result) {
-						if (result.result === 'NA') {
-							return;
-						}
-						console.info(result.rule.heading); // eslint-disable-line no-console
-						if (result.result === 'FAIL') {
-							assert.fail(result.result, 'FAIL', axs.Audit.accessibilityErrorMessage(result), '!==');
-						}
-					});
-				});
+		test('A11y Audit - Fixture: d2l-select-outcomes', function() {
+			var axsConfig = new axs.AuditConfiguration();
+			axsConfig.scope = document.body;
+			axsConfig.showUnsupportedRulesWarning = false;
+			var auditResults = axs.Audit.run(axsConfig);
+			auditResults.forEach(function(result) {
+				if (result.result === 'NA') {
+					return;
+				}
+				console.info(result.rule.heading); // eslint-disable-line no-console
+				if (result.result === 'FAIL') {
+					assert.fail(result.result, 'FAIL', axs.Audit.accessibilityErrorMessage(result), '!==');
+				}
 			});
 		});
-	</script>
+	});
+});
+</script>
 </body>
 
 </html>

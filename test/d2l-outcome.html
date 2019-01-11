@@ -1,154 +1,155 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>d2l-outcome test</title>
+	<title>d2l-outcome test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
-	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../wct-browser-legacy/browser.js"></script>
+	<script src="./utilities/fetch-siren-entity-whitelist.js"></script>
 
-    <link rel="import" href="../d2l-outcome.html">
+	<script type="module" src="../d2l-outcome.js"></script>
   </head>
   <body>
-    <test-fixture id="basic">
-      <template>
-        <d2l-outcome></d2l-outcome>
-      </template>
-    </test-fixture>
+	<test-fixture id="basic">
+	  <template>
+		<d2l-outcome></d2l-outcome>
+	  </template>
+	</test-fixture>
 
-    <script>
-		/* global suite, test, assert, fixture, setup, stubWhitelist */
-		var runTest = function(testName, href, testFunction) {
-			var element;
-			setup(function(done) {
-				element = fixture('basic');
-				function waitForLoad(entity, error) {
-					window.D2L.Siren.EntityStore.removeListener(
-						href,
-						'',
-						waitForLoad
-					);
-					if (error) {
-						done(error);
-						return;
-					}
-					setTimeout(function() {
-						done();
-					});
-				}
-				stubWhitelist();
-				window.D2L.Siren.EntityStore.addListener(
-					href,
-					'',
-					waitForLoad
-				);
-				element.href = href;
-				element.token = '';
+	<script type="module">
+import '../d2l-outcome.js';
+/* global suite, test, assert, fixture, setup, stubWhitelist */
+var runTest = function(testName, href, testFunction) {
+	var element;
+	setup(function(done) {
+		element = fixture('basic');
+		function waitForLoad(entity, error) {
+			window.D2L.Siren.EntityStore.removeListener(
+				href,
+				'',
+				waitForLoad
+			);
+			if (error) {
+				done(error);
+				return;
+			}
+			setTimeout(function() {
+				done();
 			});
+		}
+		stubWhitelist();
+		window.D2L.Siren.EntityStore.addListener(
+			href,
+			'',
+			waitForLoad
+		);
+		element.href = href;
+		element.token = '';
+	});
 
-			test(testName, function(){
-				testFunction(element);
-			});
-		};
+	test(testName, function(){
+		testFunction(element);
+	});
+};
 
-		suite('d2l-outcome', function() {
-			test('instantiating the element works', function() {
-				var element = fixture('basic');
-				assert.equal(element.is, 'd2l-outcome');
-			});
+suite('d2l-outcome', function() {
+	test('instantiating the element works', function() {
+		var element = fixture('basic');
+		assert.equal(element.is, 'd2l-outcome');
+	});
 
-			suite('smoke test', function() {
-				runTest(
-					'renders outcome',
-					'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json',
-					function(element) {
-						var content = Polymer.dom(element.$$('siren-entity-loading')).textContent.trim();
-						assert.equal(content, 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.');
-					}
-				);
-			});
+	suite('smoke test', function() {
+		runTest(
+			'renders outcome',
+			'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json',
+			function(element) {
+				var content = Polymer.dom(element.$$('siren-entity-loading')).textContent.trim();
+				assert.equal(content, 'Interpret words and phrases as they are used in a text, including determining technical, connotative, and figurative meanings, and analyze how specific word choices shape meaning or tone.');
+			}
+		);
+	});
 
-			suite('asn basic list', function() {
-				runTest(
-					'flattens a single list in ASN outcomes',
-					'static-data/outcomes/asn-outcome-with-list.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-text s-html').html;
-						assert.equal('Prefix <span> One, Two, Three </span> Suffix', content);
-					}
-				);
-			});
-			
-			suite('asn multiple lists', function() {
-				runTest(
-					'flattens multiple lists in ASN outcomes',
-					'static-data/outcomes/asn-outcome-with-two-lists.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-text s-html').html;
-						assert.equal('A <span> 1, 2, 3 </span> B <span> i, ii, iii </span> C', content);
-					}
-				);
-			});
-			
-			suite('asn malformed list', function() {
-				runTest(
-					'flattens lists in ASN outcomes that are missing closing tags',
-					'static-data/outcomes/asn-outcome-with-malformed-list.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-text s-html').html;
-						assert.equal('Prefix <span> One, Two, Three </span>', content);
-					}
-				);
-			});
-			
-			suite('outcome with notation and label', function() {
-				runTest(
-					'shows the outcome notation, primary subject, label, and listId',
-					'static-data/outcomes/outcome-with-notation-and-subject.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-identifier').textContent;
-						assert.equal('notation - subject label listId', content);
-					}
-				);
-			});
-			
-			suite('outcome with altNotation but no notation', function() {
-				runTest(
-					'use altNotation if notation is null, empty, or only whitespace',
-					'static-data/outcomes/outcome-with-alt-notation-but-no-notation.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-identifier').textContent;
-						assert.equal('altNotation - subject', content);
-					}
-				);
-			});
-			
-			suite('outcome with notation only', function() {
-				runTest(
-					'correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId',
-					'static-data/outcomes/outcome-with-notation-only.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-identifier').textContent;
-						assert.equal('notation', content);
-					}
-				);
-			});
-			
-			suite('outcome without notation', function() {
-				runTest(
-					'correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation',
-					'static-data/outcomes/outcome-with-no-notation.json',
-					function(element) {
-						var content = element.$$('.d2l-outcome-identifier').textContent;
-						assert.equal('subject label', content);
-					}
-				);
-			});
-			
-		});
-    </script>
+	suite('asn basic list', function() {
+		runTest(
+			'flattens a single list in ASN outcomes',
+			'static-data/outcomes/asn-outcome-with-list.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-text s-html').html;
+				assert.equal('Prefix <span> One, Two, Three </span> Suffix', content);
+			}
+		);
+	});
+	
+	suite('asn multiple lists', function() {
+		runTest(
+			'flattens multiple lists in ASN outcomes',
+			'static-data/outcomes/asn-outcome-with-two-lists.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-text s-html').html;
+				assert.equal('A <span> 1, 2, 3 </span> B <span> i, ii, iii </span> C', content);
+			}
+		);
+	});
+	
+	suite('asn malformed list', function() {
+		runTest(
+			'flattens lists in ASN outcomes that are missing closing tags',
+			'static-data/outcomes/asn-outcome-with-malformed-list.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-text s-html').html;
+				assert.equal('Prefix <span> One, Two, Three </span>', content);
+			}
+		);
+	});
+	
+	suite('outcome with notation and label', function() {
+		runTest(
+			'shows the outcome notation, primary subject, label, and listId',
+			'static-data/outcomes/outcome-with-notation-and-subject.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal('notation - subject label listId', content);
+			}
+		);
+	});
+	
+	suite('outcome with altNotation but no notation', function() {
+		runTest(
+			'use altNotation if notation is null, empty, or only whitespace',
+			'static-data/outcomes/outcome-with-alt-notation-but-no-notation.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal('altNotation - subject', content);
+			}
+		);
+	});
+	
+	suite('outcome with notation only', function() {
+		runTest(
+			'correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId',
+			'static-data/outcomes/outcome-with-notation-only.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal('notation', content);
+			}
+		);
+	});
+	
+	suite('outcome without notation', function() {
+		runTest(
+			'correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation',
+			'static-data/outcomes/outcome-with-no-notation.json',
+			function(element) {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal('subject label', content);
+			}
+		);
+	});
+	
+});
+</script>
   </body>
 </html>

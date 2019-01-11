@@ -1,66 +1,67 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>d2l-alignment-intent test</title>
+	<title>d2l-alignment-intent test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
-	<script src="utilities/fetch-siren-entity-whitelist.js"></script>
+	<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../wct-browser-legacy/browser.js"></script>
+	<script src="./utilities/fetch-siren-entity-whitelist.js"></script>
 
-    <link rel="import" href="../d2l-alignment-intent.html">
+	<script type="module" src="../d2l-alignment-intent.js"></script>
   </head>
   <body>
-    <test-fixture id="basic">
-      <template>
-        <d2l-alignment-intent></d2l-alignment-intent>
-      </template>
-    </test-fixture>
+	<test-fixture id="basic">
+	  <template>
+		<d2l-alignment-intent></d2l-alignment-intent>
+	  </template>
+	</test-fixture>
 
-    <script>
-		/* global suite, test, assert, fixture, setup, stubWhitelist */
-		suite('d2l-alignment-intent', function() {
-			test('instantiating the element works', function() {
-				var element = fixture('basic');
-				assert.equal(element.is, 'd2l-alignment-intent');
-			});
+	<script type="module">
+import '../d2l-alignment-intent.js';
+/* global suite, test, assert, fixture, setup, stubWhitelist */
+suite('d2l-alignment-intent', function() {
+	test('instantiating the element works', function() {
+		var element = fixture('basic');
+		assert.equal(element.is, 'd2l-alignment-intent');
+	});
 
-			suite('smoke test', function() {
-				var element;
-				setup(function(done) {
-					element = fixture('basic');
-					var href = 'static-data/intents/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
-					function waitForLoad(entity, error) {
-						window.D2L.Siren.EntityStore.removeListener(
-							href,
-							'',
-							waitForLoad
-						);
-						if (error) {
-							done(error);
-							return;
-						}
-						setTimeout(function() {
-							done();
-						});
-					}
-					stubWhitelist();
-					window.D2L.Siren.EntityStore.addListener(
-						href,
-						'',
-						waitForLoad
-					);
-					element.href = 'static-data/intents/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
-					element.token = '';
+	suite('smoke test', function() {
+		var element;
+		setup(function(done) {
+			element = fixture('basic');
+			var href = 'static-data/intents/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
+			function waitForLoad(entity, error) {
+				window.D2L.Siren.EntityStore.removeListener(
+					href,
+					'',
+					waitForLoad
+				);
+				if (error) {
+					done(error);
+					return;
+				}
+				setTimeout(function() {
+					done();
 				});
-
-				test('sets d2l-outcome href', function() {
-					assert.equal(element.$$('d2l-outcome').href, 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json');
-				});
-			});
+			}
+			stubWhitelist();
+			window.D2L.Siren.EntityStore.addListener(
+				href,
+				'',
+				waitForLoad
+			);
+			element.href = 'static-data/intents/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json';
+			element.token = '';
 		});
-    </script>
+
+		test('sets d2l-outcome href', function() {
+			assert.equal(element.$$('d2l-outcome').href, 'static-data/outcomes/c297b02c-19b1-485a-92db-e598316271c8/5f4d6901-7c10-4edc-b2e1-821efc5c3708.json');
+		});
+	});
+});
+</script>
   </body>
 </html>

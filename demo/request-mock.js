@@ -1,5 +1,3 @@
-
-<script>
 window.d2lfetch.fetch = function(href) {
 	return D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest({ url: href, formData: function() { return Promise.resolve(); } })
 		.then(function(body) {
@@ -329,4 +327,3 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			return Promise.reject(new Error('Not Found: ' + href));
 	}
 };
-</script>
