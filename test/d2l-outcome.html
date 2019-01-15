@@ -49,7 +49,7 @@
 				element.token = '';
 			});
 
-			test(testName, function(){
+			test(testName, function() {
 				testFunction(element);
 			});
 		};
@@ -81,7 +81,7 @@
 					}
 				);
 			});
-			
+
 			suite('asn multiple lists', function() {
 				runTest(
 					'flattens multiple lists in ASN outcomes',
@@ -92,7 +92,7 @@
 					}
 				);
 			});
-			
+
 			suite('asn malformed list', function() {
 				runTest(
 					'flattens lists in ASN outcomes that are missing closing tags',
@@ -103,7 +103,7 @@
 					}
 				);
 			});
-			
+
 			suite('outcome with notation and label', function() {
 				runTest(
 					'shows the outcome notation, primary subject, label, and listId',
@@ -114,7 +114,7 @@
 					}
 				);
 			});
-			
+
 			suite('outcome with altNotation but no notation', function() {
 				runTest(
 					'use altNotation if notation is null, empty, or only whitespace',
@@ -125,7 +125,7 @@
 					}
 				);
 			});
-			
+
 			suite('outcome with notation only', function() {
 				runTest(
 					'correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId',
@@ -136,7 +136,7 @@
 					}
 				);
 			});
-			
+
 			suite('outcome without notation', function() {
 				runTest(
 					'correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation',
@@ -147,7 +147,7 @@
 					}
 				);
 			});
-			
+
 		});
     </script>
   </body>
