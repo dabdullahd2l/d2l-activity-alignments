@@ -1,5 +1,5 @@
+import SirenParse from 'siren-parser';
 
-<script>
 window.d2lfetch.fetch = function(href) {
 	return D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest({ url: href, formData: function() { return Promise.resolve(); } })
 		.then(function(body) {
@@ -23,7 +23,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 	var href = request.url && request.url.href || request.url;
 	switch (href) {
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.activities.api.proddev.d2l/activities/6606_3000_1/usages/6609':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'activity',
 					'discussion-activity'
@@ -86,7 +86,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			}));
 
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.alignments.api.proddev.d2l/activity/6606_3000_1/6609':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'collection'
 				],
@@ -114,7 +114,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			}));
 
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/d31d0671-bdad-4f08-9da9-65351e3b250a':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'intent'
 				],
@@ -135,7 +135,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			}));
 
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/registries/697a50cf-9c30-4a8c-970a-b67fa0807ef8/edcdd008-20f2-4934-9017-e53650505eae':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'intent'
 				],
@@ -155,9 +155,8 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 				]
 			}));
 
-
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/d31d0671-bdad-4f08-9da9-65351e3b250a':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'outcome'
 				],
@@ -183,7 +182,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			}));
 
 		case 'https://15215d45-f7e9-4967-bf9b-13a685538829.outcomes.api.proddev.d2l/outcomes/edcdd008-20f2-4934-9017-e53650505eae':
-			return Promise.resolve(window.D2L.Hypermedia.Siren.Parse({
+			return Promise.resolve(SirenParse({
 				'class': [
 					'outcome'
 				],
@@ -246,7 +245,7 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 						}
 					];
 				}
-				return window.D2L.Hypermedia.Siren.Parse({
+				return SirenParse({
 					'class': [
 						'collection'
 					],
@@ -329,4 +328,3 @@ D2L.PolymerBehaviors.FetchSirenEntityBehavior._makeRequest = function(request) {
 			return Promise.reject(new Error('Not Found: ' + href));
 	}
 };
-</script>
