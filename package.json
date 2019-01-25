@@ -1,8 +1,7 @@
 {
   "description": "",
   "homepage": "https://github.com/Brightspace/d2l-activity-alignments",
-  "name": "d2l-select-outcomes",
-  "version": "0.0.26",
+  "name": "d2l-activity-alignments",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:lint && polymer test --skip-plugin sauce",
