@@ -38,9 +38,9 @@ Your application is already set up to be tested via [web-component-tester](https
 ```html
 <script type="module" src="../d2l-alignment-alignments.js"></script>
 
-	<demo-snippet>
-		<template>
-		  <d2l-activity-alignments href="<copy from quad site>" token="<copy from quad site>"></d2l-activity-alignments>
-		</template>
-	  </demo-snippet>
-
+<demo-snippet>
+	<template>
+		<d2l-activity-alignments href="<copy from quad site>" token="<copy from quad site>"></d2l-activity-alignments>
+	</template>
+</demo-snippet>
+```
