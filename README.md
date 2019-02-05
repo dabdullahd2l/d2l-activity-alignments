@@ -1,4 +1,4 @@
-# \<d2l-select-outcomes\>
+# \<d2l-activity-alignments\>
 
 
 
