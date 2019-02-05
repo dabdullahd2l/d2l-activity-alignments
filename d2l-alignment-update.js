@@ -140,7 +140,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-update">
 					<d2l-button on-click="_cancel" aria-label="[[localize('cancelLabel')]]">[[localize('cancel')]]</d2l-button>
 					<d2l-loading-spinner hidden$="[[!_loading]]"></d2l-loading-spinner>
 				</div>
-				<template is="dom-if" if="[[_error]]">
+				<template is="dom-if" if="[[_promiseError]]">
 					<d2l-alert type="error">[[localize('error')]]</d2l-alert>
 				</template>
 			</div>
@@ -255,7 +255,7 @@ Polymer({
 
 	_performActionAndUpdate: function(getAction) {
 		var self = this;
-		this._error = false;
+		this._promiseError = false;
 		this.__promises++;
 		this.__promise = Promise.resolve(this.__promise)
 			.then(function() {
@@ -276,7 +276,7 @@ Polymer({
 			.catch(function(err) {
 				console.error(err); // eslint-disable-line no-console
 				self._buttonsDisabled = false;
-				self._error = true;
+				self._promiseError = true;
 				self.__promises--;
 			});
 		return this.__promise;
