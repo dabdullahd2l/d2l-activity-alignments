@@ -11,6 +11,7 @@ First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polyme
 ```
 $ polymer serve
 ```
+The demo can be viewed at http://127.0.0.1:8081/components/d2l-activity-alignments/demo/
 
 ## Running Tests
 
@@ -19,3 +20,27 @@ $ polymer test
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+
+### Test with LMS API
+
+1. Comment out request-mock.js in the demo/index.html
+	* \<script type="module" src="./request-mock.js"></script>
+
+2. Import the requried module
+	* For example: \<script type="module" src="../d2l-alignment-list.js"></script>
+
+3. Get href and token from quad site for the module you want to test, by insepcting element using F12(chrome)
+
+4. Have fun testing
+
+### Display d2l-activity-alignments
+
+```html
+<script type="module" src="../d2l-alignment-alignments.js"></script>
+
+	<demo-snippet>
+		<template>
+		  <d2l-activity-alignments href="<copy from quad site>" token="<copy from quad site>"></d2l-activity-alignments>
+		</template>
+	  </demo-snippet>
+
