@@ -26,7 +26,7 @@ Your application is already set up to be tested via [web-component-tester](https
 1. Comment out request-mock.js in the demo/index.html
 	* \<script type="module" src="./request-mock.js"></script>
 
-2. Import the requried module
+2. Import the required module
 	* For example: \<script type="module" src="../d2l-alignment-list.js"></script>
 
 3. Get href and token from quad site for the module you want to test, by insepcting element using F12(chrome)
