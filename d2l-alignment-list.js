@@ -122,7 +122,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-alignment-list">
 						</li>
 					</template>
 				</ul>
-				<template is="dom-if" if="[[_error]]">
+				<template is="dom-if" if="[[_promiseError]]">
 					<d2l-alert type="error">[[localize('error')]]</d2l-alert>
 				</template>
 			</div>
