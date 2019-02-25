@@ -132,27 +132,13 @@ suite('d2l-outcome', function() {
 		assert.equal(element.is, 'd2l-outcome');
 	});
 
-	suite('smoke test', function() {
-		var element;
-		suiteSetup(function(done){
-			// asn_data.properties.description = "Perform all medical, diagnostic, and surgical procedures considered essential for the area of practice"
-			element = getLoadedElement('outcomes/asn-outcomes',done)
-		});
-
-		test('renders outcome', function() {
-			var content = dom(element.$$('siren-entity-loading')).textContent.trim();
-			var asn_properties = asn_data.properties;
-			var notation = asn_properties.notation;
-			var subjects = "";
-			var i;
-			for (i= 0; i < asn_properties.subjects.length; i++){
-				subjects += asn_properties.subjects[i];
-			}
-			var desc = asn_properties.description;
-			var label = asn_properties.label;
-			assert.equal(content,notation +' - ' + subjects +' ' + label + desc);
-		});
-	});
+	// suite('smoke test', function() {
+	// 	var element;
+	// 	suiteSetup(function(done){
+	// 		// asn_data.properties.description = "Perform all medical, diagnostic, and surgical procedures considered essential for the area of practice"
+	// 		element = getLoadedElement('outcomes/asn-outcomes',done)
+	// 	});
+	// });
 
 	suite('asn lists', function() {
 		var element;
@@ -192,49 +178,96 @@ suite('d2l-outcome', function() {
 		});
 	});
 
-	// suite('outcome with notation and label', function() {
-	// 	runTest(
-	// 		'shows the outcome notation, primary subject, label, and listId',
-	// 		'static-data/outcomes/outcome-with-notation-and-subject.json',
-	// 		function(element) {
-	// 			var content = element.$$('.d2l-outcome-identifier').textContent;
-	// 			assert.equal('notation - subject label listId', content);
-	// 		}
-	// 	);
-	// });
+	suite('Notations and labels', function() {
+		var element, desc, notation, subjects, label, listId, altNotation;
+		suite('Full Data', function(){
+			suiteSetup(function(done){
+				desc = "Simple Description";
+				asn_data.properties.description = desc;
+				notation = "aamc-pcrs-comp-c0101";
+				asn_data.properties.notation = notation;
+				subjects = ["Career Education"];
+				asn_data.properties.subjects = subjects;
+				label = "Competency";
+				asn_data.properties.label = label;
+				listId = "1234";
+				asn_data.properties.listId = listId;
+				element = getLoadedElement('outcomes/asn-outcomes',done)
+			});
 
-	// suite('outcome with altNotation but no notation', function() {
-	// 	runTest(
-	// 		'use altNotation if notation is null, empty, or only whitespace',
-	// 		'static-data/outcomes/outcome-with-alt-notation-but-no-notation.json',
-	// 		function(element) {
-	// 			var content = element.$$('.d2l-outcome-identifier').textContent;
-	// 			assert.equal('altNotation - subject', content);
-	// 		}
-	// 	);
-	// });
+			test('shows the outcome notation, primary subject, label, and description', function() {
+				var content = dom(element.$$('siren-entity-loading')).textContent.trim();
+				assert.equal(content,notation +" - " + subjects[0] + " " + label + " " + listId + desc);
+			});
+		});
 
-	// suite('outcome with notation only', function() {
-	// 	runTest(
-	// 		'correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId',
-	// 		'static-data/outcomes/outcome-with-notation-only.json',
-	// 		function(element) {
-	// 			var content = element.$$('.d2l-outcome-identifier').textContent;
-	// 			assert.equal('notation', content);
-	// 		}
-	// 	);
-	// });
+		suite('outcome with altNotation but no notation', function() {
+			suiteSetup(function(done){
+				desc = "Simple Description";
+				asn_data.properties.description = desc;
+				notation = " ";
+				asn_data.properties.notation = notation;
+				altNotation = 'Alternative Notation';
+				asn_data.properties.altNotation = altNotation;
+				subjects = ["Career Education"];
+				asn_data.properties.subjects = subjects;
+				label = "";
+				asn_data.properties.label = label;
+				listId = "";
+				asn_data.properties.listId = listId;
+				element = getLoadedElement('outcomes/asn-outcomes',done)
+			});
 
-	// suite('outcome without notation', function() {
-	// 	runTest(
-	// 		'correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation',
-	// 		'static-data/outcomes/outcome-with-no-notation.json',
-	// 		function(element) {
-	// 			var content = element.$$('.d2l-outcome-identifier').textContent;
-	// 			assert.equal('subject label', content);
-	// 		}
-	// 	);
-	// });
+			test('use altNotation if notation is null, empty, or only whitespace', function() {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal(altNotation + " - " + subjects[0], content);
+			});
+		});
+
+		suite('outcome with notation only', function() {
+			suiteSetup(function(done){
+				desc = "Simple Description";
+				asn_data.properties.description = desc;
+				notation = "A Notation";
+				asn_data.properties.notation = notation;
+				altNotation = "";
+				asn_data.properties.altNotation = altNotation;
+				subjects = [];
+				asn_data.properties.subjects = subjects;
+				label = "";
+				asn_data.properties.label = label;
+				listId = "";
+				asn_data.properties.listId = listId;
+				element = getLoadedElement('outcomes/asn-outcomes',done)
+			})
+			test('correctly render outcome identifier for outcomes with a notation, but no subject, label, or listId', function() {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal(notation, content);
+			});
+		});
+
+		suite('outcome without notation', function() {
+			suiteSetup(function(done){
+				desc = "Simple Description";
+				asn_data.properties.description = desc;
+				notation = "";
+				asn_data.properties.notation = notation;
+				altNotation = "";
+				asn_data.properties.altNotation = altNotation;
+				subjects = ["Subject 1"];
+				asn_data.properties.subjects = subjects;
+				label = "A Label";
+				asn_data.properties.label = label;
+				listId = "";
+				asn_data.properties.listId = listId;
+				element = getLoadedElement('outcomes/asn-outcomes',done)
+			})
+			test('correctly render outcome identifier for outcomes with a subject, label, or listId, but no notation', function() {
+				var content = element.$$('.d2l-outcome-identifier').textContent;
+				assert.equal(subjects[0] + " " + label, content);
+			});
+		});
+	});
 
 });
 </script>
